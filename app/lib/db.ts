@@ -1,37 +1,56 @@
-import fs from 'fs';
-import path from 'path';
+import { supabase } from './supabase';
 
 export interface User {
-    id: string;
+    id: string; // Will correspond to Supabase UUID
     name?: string;
     email: string;
     password?: string;
+    created_at?: string;
 }
 
-const usersFilePath = path.join(process.cwd(), 'users.json');
-
 export async function getUsers(): Promise<User[]> {
-    try {
-        const data = await fs.promises.readFile(usersFilePath, 'utf8');
-        return JSON.parse(data) as User[];
-    } catch (error) {
-        if ((error as any).code === 'ENOENT') {
-            // If file does not exist, initialize it
-            await fs.promises.writeFile(usersFilePath, '[]');
-            return [];
-        }
-        console.error('Error reading users from mock database:', error);
+    const { data, error } = await supabase
+        .from('users')
+        .select('*');
+
+    if (error) {
+        console.error('Error fetching users from Supabase:', error);
         return [];
     }
+
+    return data || [];
 }
 
 export async function getUser(email: string): Promise<User | undefined> {
-    const users = await getUsers();
-    return users.find((user) => user.email === email);
+    const { data: user, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email)
+        .single();
+
+    if (error) {
+        console.error('Error fetching user from Supabase:', error);
+        return undefined;
+    }
+
+    return user;
 }
 
-export async function createUser(user: User): Promise<void> {
-    const users = await getUsers();
-    users.push(user);
-    await fs.promises.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+export async function createUser(user: Partial<User>): Promise<void> {
+    const { error } = await supabase
+        .from('users')
+        .insert([
+            {
+                name: user.name,
+                email: user.email,
+                password: user.password,
+                // Do not pass id if Supabase relies on auto-generating UUIDs
+                ...(user.id ? { id: user.id } : {})
+            }
+        ]);
+
+    if (error) {
+        console.error('Error creating user in Supabase:', error);
+        throw error;
+    }
 }
