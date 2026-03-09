@@ -10,9 +10,11 @@ export const authConfig = {
             const isOnLoginPage = nextUrl.pathname.startsWith('/login');
             const isOnSignupPage = nextUrl.pathname.startsWith('/signup');
 
-            if (isOnLoginPage || isOnSignupPage) {
+            const isOnRootPage = nextUrl.pathname === '/';
+
+            if (isOnLoginPage || isOnSignupPage || isOnRootPage) {
                 if (isLoggedIn) {
-                    return Response.redirect(new URL('/', nextUrl));
+                    return Response.redirect(new URL('/dashboard', nextUrl));
                 }
                 return true;
             }

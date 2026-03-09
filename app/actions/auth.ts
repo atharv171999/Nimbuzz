@@ -31,8 +31,15 @@ export async function signup(
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
+    const username = formData.get('username') as string;
+    const dobDay = formData.get('dobDay') as string;
+    const dobMonth = formData.get('dobMonth') as string;
+    const dobYear = formData.get('dobYear') as string;
+
+    const date_of_birth = (dobYear && dobMonth && dobDay) ? `${dobYear}-${dobMonth.padStart(2, '0')}-${dobDay.padStart(2, '0')}` : undefined;
 
     if (!email || !password) return 'Please enter both email and password';
+    if (!username) return 'Please enter a username';
 
     const existingUser = await getUser(email);
     if (existingUser) return 'A user with this email already exists';
@@ -42,8 +49,10 @@ export async function signup(
     await createUser({
         id: Date.now().toString(),
         name,
+        username,
         email,
         password: hashedPassword,
+        date_of_birth,
     });
 
     try {
@@ -57,5 +66,5 @@ export async function signup(
 }
 
 export async function logout() {
-    await signOut({ redirectTo: '/login' });
+    await signOut({ redirectTo: '/' });
 }

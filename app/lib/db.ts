@@ -3,8 +3,10 @@ import { supabase } from './supabase';
 export interface User {
     id: string; // Will correspond to Supabase UUID
     name?: string;
+    username?: string;
     email: string;
     password?: string;
+    date_of_birth?: string;
     created_at?: string;
 }
 
@@ -42,8 +44,10 @@ export async function createUser(user: Partial<User>): Promise<void> {
         .insert([
             {
                 name: user.name,
+                username: user.username,
                 email: user.email,
                 password: user.password,
+                date_of_birth: user.date_of_birth,
                 // Do not pass id if Supabase relies on auto-generating UUIDs
                 ...(user.id ? { id: user.id } : {})
             }
