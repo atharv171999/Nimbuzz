@@ -130,17 +130,11 @@
 // }
 
 import Home from './home/page'
-import Login from './login/page'
 export default function HomePage() {
   return(
     <>
-    <div className=' w-full flex justify-center ' >
-      <div className=' w-2/3 '>
+    <div className=' w-full  ' >
     <Home/>
-      </div>
-      <div className=' w-1/2 '>
-    <Login/>
-      </div>
     </div>
     </>
   )

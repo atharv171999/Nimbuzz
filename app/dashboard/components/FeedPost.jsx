@@ -10,7 +10,7 @@ export default function FeedPost({ post, author }) {
         : 'Just now';
 
     return (
-        <div className="w-full max-w-[470px] mx-auto bg-white border border-zinc-200/80 rounded-2xl overflow-hidden mb-8 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] flex flex-col group">
+        <div className="w-full max-w-[470px] lg:mx-auto bg-white border border-zinc-200/80 rounded-2xl lg:rounded-3xl overflow-hidden mb-6 lg:mb-10 shadow-sm lg:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] flex flex-col group">
             
             {/* Post Header */}
             <div className="flex items-center justify-between p-3 border-b border-slate-100">

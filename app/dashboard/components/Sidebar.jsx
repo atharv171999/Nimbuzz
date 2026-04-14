@@ -13,7 +13,7 @@ export default function Sidebar({ user }) {
 
     return (
         <>
-            <aside className="w-[72px] xl:w-[244px] h-full flex flex-col justify-between border-r border-slate-200 bg-white/70 backdrop-blur-xl text-slate-800 transition-all duration-300">
+            <aside className="hidden lg:flex w-[72px] xl:w-[244px] h-full flex-col justify-between border-r border-slate-200 bg-white/70 backdrop-blur-xl text-slate-800 transition-all duration-300">
                 <div className="flex flex-col pt-8 pb-4">
                     {/* Identity area */}
                     <div className="flex items-center px-3 xl:px-6 mb-8 h-10 w-full">

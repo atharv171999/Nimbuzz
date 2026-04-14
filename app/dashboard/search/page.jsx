@@ -19,9 +19,9 @@ export default async function SearchPage({ searchParams }) {
     }
 
     return (
-        <div className="flex flex-col min-h-full items-center py-12 w-full relative px-4 text-slate-900">
-             {/* Title */}
-             <h1 className="text-4xl font-black text-zinc-900 mb-8 font-serif drop-shadow-md">
+        <div className="flex flex-col min-h-full items-center py-6 lg:py-12 w-full relative px-4 text-slate-900">
+             {/* Title - Hidden on mobile as we have the global header */}
+             <h1 className="hidden lg:block text-4xl font-black text-zinc-900 mb-8 font-serif drop-shadow-md">
                  Explore
              </h1>
              

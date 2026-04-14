@@ -1,6 +1,8 @@
 import { auth } from '@/auth';
 import { getUser, getPostsByEmail, getFollowerCount, getFollowingCount } from '@/app/lib/db';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { SignOutButton } from '@/app/components/SignOutButton';
 
 export default async function ProfilePage() {
     const session = await auth();
@@ -42,10 +44,25 @@ export default async function ProfilePage() {
 
                     {/* Meta Data */}
                     <div className="flex flex-col items-center md:items-start flex-1 gap-4">
-                        <div className="flex items-center gap-6 mb-2">
+                        <div className="flex items-center justify-between w-full mb-2">
                             <h2 className="text-3xl font-black text-zinc-900 tracking-tighter">
                                 {userProfile.username || userProfile.name}
                             </h2>
+                            
+                            {/* Profile Actions - Settings & SignOut (Mobile Accessible) */}
+                            <div className="flex items-center gap-3">
+                                <Link 
+                                    href="/dashboard/settings/personal-account"
+                                    className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                                    title="Settings"
+                                >
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+                                </Link>
+                                
+                                <div className="lg:hidden">
+                                     <SignOutButton />
+                                </div>
+                            </div>
                         </div>
 
                         {/* Stats Row */}
