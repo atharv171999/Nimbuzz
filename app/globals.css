@@ -10,6 +10,41 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* User Explicit Hex Palette - Overriding UI core framework for Monochrome */
+  /* Dark mapping */
+  --color-zinc-950: #212529;
+  --color-zinc-900: #343a40;
+  --color-zinc-800: #343a40;
+  --color-zinc-700: #495057;
+  
+  --color-slate-950: #212529;
+  --color-slate-900: #343a40;
+  --color-slate-800: #343a40;
+  --color-slate-700: #495057;
+
+  /* Mid mapping */
+  --color-zinc-600: #adb5bd;
+  --color-zinc-500: #adb5bd;
+  --color-zinc-400: #adb5bd;
+  
+  --color-slate-600: #adb5bd;
+  --color-slate-500: #adb5bd;
+  --color-slate-400: #adb5bd;
+
+  /* Light mapping */
+  --color-zinc-300: #dee2e6;
+  --color-zinc-200: #e9ecef;
+  --color-zinc-100: #f8f9fa;
+  --color-zinc-50: #f8f9fa;
+  
+  --color-slate-300: #dee2e6;
+  --color-slate-200: #e9ecef;
+  --color-slate-100: #f8f9fa;
+  --color-slate-50: #f8f9fa;
+  
+  --color-white: #f8f9fa;
+  --color-black: #343a40;
 }
 
 @media (prefers-color-scheme: dark) {

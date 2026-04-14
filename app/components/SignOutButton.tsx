@@ -10,9 +10,9 @@ export function SignOutButton() {
     return (
         <button
             onClick={handleSignOut}
-            className="mt-4 rounded-full bg-red-600 px-8 py-3 text-sm font-bold text-white transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50"
+            className="group w-full flex items-center justify-center p-3 rounded-xl border-2 border-zinc-200 text-[15px] font-semibold text-zinc-600 bg-white hover:bg-zinc-900 hover:text-white hover:border-zinc-900 transition-all duration-300"
         >
-            Sign Out
+            <span className="group-hover:-translate-y-0.5 transition-transform duration-300">Sign Out</span>
         </button>
     );
 }

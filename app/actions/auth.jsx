@@ -6,11 +6,12 @@ import { createUser, getUser } from '@/app/lib/db';
 import bcrypt from 'bcryptjs';
 
 export async function login(
-    prevState: string | undefined,
-    formData: FormData,
+    prevState,
+    formData,
 ) {
     try {
-        await signIn('credentials', Object.fromEntries(formData));
+        const payload = Object.fromEntries(formData);
+        await signIn('credentials', { ...payload, redirectTo: '/dashboard' });
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -25,16 +26,16 @@ export async function login(
 }
 
 export async function signup(
-    prevState: string | undefined,
-    formData: FormData,
+    prevState,
+    formData,
 ) {
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const username = formData.get('username') as string;
-    const dobDay = formData.get('dobDay') as string;
-    const dobMonth = formData.get('dobMonth') as string;
-    const dobYear = formData.get('dobYear') as string;
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const username = formData.get('username');
+    const dobDay = formData.get('dobDay');
+    const dobMonth = formData.get('dobMonth');
+    const dobYear = formData.get('dobYear');
 
     const date_of_birth = (dobYear && dobMonth && dobDay) ? `${dobYear}-${dobMonth.padStart(2, '0')}-${dobDay.padStart(2, '0')}` : undefined;
 
@@ -56,7 +57,8 @@ export async function signup(
     });
 
     try {
-        await signIn('credentials', formData);
+        const payload = Object.fromEntries(formData);
+        await signIn('credentials', { ...payload, redirectTo: '/dashboard' });
     } catch (error) {
         if (error instanceof AuthError) {
             return 'Something went wrong logging you in after signup.';

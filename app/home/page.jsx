@@ -6,12 +6,12 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 selection:bg-indigo-500/30">
+    <div className="relative min-h-screen border-r border-zinc-200 overflow-hidden bg-zinc-950 selection:bg-zinc-700">
       {/* Background gradients and blobs */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute -top-[30%] -left-[10%] h-[70%] w-[50%] rounded-full bg-indigo-600/20 blur-[120px]" />
-        <div className="absolute top-[20%] -right-[10%] h-[60%] w-[40%] rounded-full bg-purple-600/20 blur-[120px]" />
-        <div className="absolute -bottom-[20%] left-[20%] h-[50%] w-[60%] rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="absolute -top-[30%] -left-[10%] h-[70%] w-[50%] rounded-full bg-zinc-800/30 blur-[120px]" />
+        <div className="absolute top-[20%] -right-[10%] h-[60%] w-[40%] rounded-full bg-zinc-800/30 blur-[120px]" />
+        <div className="absolute -bottom-[20%] left-[20%] h-[50%] w-[60%] rounded-full bg-zinc-800/20 blur-[120px]" />
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
       </div>
 
@@ -50,8 +50,8 @@ export default async function Home() {
       </nav> */}
 
       {/* Main Content Area */}
-      <main className=" h-screen relative z-10 mx-auto max-w-7xl  px-6 pt-20 pb-32 sm:pt-32 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center ">
+      <main className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
 
           {/* Welcome Badge for Authenticated Users */}
           {/* {session?.user && (
@@ -63,16 +63,25 @@ export default async function Home() {
             </div>
           )} */}
 
-          <h1 className="mt-8 bg-gradient-to-b from-white to-white/60 bg-clip-text text-2xl md:text-3xl font-extrabold tracking-tight text-transparent lg:text-5xl">
+          <div className="mx-auto flex flex-col items-center justify-center mb-6">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 shadow-lg shadow-black/20 mb-3">
+              <svg className="h-8 w-8 text-zinc-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <span className="text-2xl font-bold tracking-tight text-white">Nimbus</span>
+          </div>
+
+          <h1 className="bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-2xl md:text-3xl font-black tracking-tighter text-transparent lg:text-5xl">
             The next generation of social interaction.
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl  text-sm md:text-lg leading-8 text-gray-400">
-              Join millions of users sharing their lives, ideas, and passions. Experience a beautifully crafted, privacy-first social platform designed for the modern web.
+            Join millions of users sharing their lives, ideas, and passions. Experience a beautifully crafted, privacy-first social platform designed for the modern web.
           </p>
 
           <div className="mt-10 flex items-center justify-center gap-x-6">
-           
+
           </div>
         </div>
 
