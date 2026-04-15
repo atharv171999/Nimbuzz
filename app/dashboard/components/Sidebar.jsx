@@ -33,16 +33,22 @@ export default function Sidebar({ user }) {
                             icon={pathname === "/dashboard" ? <HomeIconActive /> : <HomeIcon />}
                         />
                         <NavItem
+                            href="/dashboard/search"
+                            label="Explore"
+                            isActive={pathname === "/dashboard/search"}
+                            icon={<SearchIcon />}
+                        />
+                        <NavItem
+                            href="/dashboard/society"
+                            label="Society"
+                            isActive={pathname === "/dashboard/society"}
+                            icon={<UsersIcon />}
+                        />
+                        <NavItem
                             href="/dashboard/messages"
                             label="Messages"
                             isActive={pathname === "/dashboard/messages"}
                             icon={<MessagesIcon />}
-                        />
-                        <NavItem
-                            href="/dashboard/search"
-                            label="Search"
-                            isActive={pathname === "/dashboard/search"}
-                            icon={<SearchIcon />}
                         />
                         <NavItem
                             href="/dashboard/notifications"
@@ -163,6 +169,38 @@ const ReelsIcon = () => (
     </svg>
 );
 
+const SearchIcon = () => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-full h-full currentColor"
+    >
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+);
+
+const UsersIcon = () => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-full h-full currentColor"
+    >
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+);
+
 const MessagesIcon = () => (
     <svg
         viewBox="0 0 24 24"
@@ -177,22 +215,6 @@ const MessagesIcon = () => (
         <polygon points="22 2 15 22 11 13 2 9 22 2" />
     </svg>
 );
-
-const SearchIcon = () => (
-    <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="w-full h-full currentColor"
-    >
-        <circle cx="10" cy="10" r="7" />
-        <line x1="21" y1="21" x2="15" y2="15" />
-    </svg>
-);
-
 
 const NotificationsIcon = () => (
     <div className="relative w-full h-full">
@@ -256,4 +278,5 @@ const PlusIcon = () => (
         <line x1="8" y1="12" x2="16" y2="12" />
     </svg>
 );
+
 

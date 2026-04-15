@@ -1,4 +1,4 @@
-import { searchUsers } from '@/app/lib/db';
+import { searchUsers, getUsers } from '@/app/lib/db';
 import SearchInput from './SearchInput';
 import Link from 'next/link';
 import { auth } from '@/auth';
@@ -6,38 +6,31 @@ import { auth } from '@/auth';
 export default async function SearchPage({ searchParams }) {
     const session = await auth();
     
-    // Next.js 15+ passes searchParams as a Promise to server components!
     const resolvedParams = await searchParams;
     const query = resolvedParams?.q || '';
     
-    // Fetch users only if a query was constructed
-    let matchedUsers = query ? await searchUsers(query) : [];
+    // Fetch all users if no query, else search
+    let matchedUsers = query ? await searchUsers(query) : await getUsers();
 
-    // Filter out the active user so they don't see themselves in search results
+    // Filter out the active user
     if (session?.user?.email) {
         matchedUsers = matchedUsers.filter(user => user.email !== session.user.email);
     }
 
     return (
         <div className="flex flex-col min-h-full items-center py-6 lg:py-12 w-full relative px-4 text-slate-900">
-             {/* Title - Hidden on mobile as we have the global header */}
              <h1 className="hidden lg:block text-4xl font-black text-zinc-900 mb-8 font-serif drop-shadow-md">
                  Explore
              </h1>
              
-             <SearchInput />
+             <SearchInput className />
 
              <div className="w-full max-w-xl flex flex-col gap-4 mt-6 relative z-10">
-                 {query && matchedUsers.length === 0 && (
-                     <div className="text-center text-slate-500 mt-12 text-lg">No users found for "{query}"</div>
+                 {!query && matchedUsers.length > 0 && (
+                     <h2 className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-2 px-2">Discover New People</h2>
                  )}
-                 {!query && (
-                     <div className="text-center text-slate-500 mt-12 flex flex-col items-center">
-                         <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10 text-slate-300"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                         </div>
-                         Start typing a username to discover people.
-                     </div>
+                 {query && matchedUsers.length === 0 && (
+                     <div className="text-center text-slate-500 mt-12 text-lg italic">No users found for &quot;{query}&quot;</div>
                  )}
                  
                  {/* Results List */}
