@@ -73,7 +73,7 @@ export default function FeedPost({ post, author, currentUserEmail }) {
         <div className="w-full max-w-[470px] lg:mx-auto bg-white border-2 border-zinc-300/90 rounded-[2.5rem] overflow-hidden mb-8 lg:mb-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.06)] flex flex-col transition-all duration-300">
             
             {/* Post Header */}
-            <div className="flex items-center justify-between p-5 border-b-2 border-zinc-300">
+            <div className="flex items-center justify-between p-5 border-b border-zinc-300">
                 <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-zinc-50 bg-zinc-100 relative shrink-0 shadow-sm transition-all ">
                         {author?.profile_picture ? (
@@ -138,7 +138,18 @@ export default function FeedPost({ post, author, currentUserEmail }) {
             )}
 
             {/* Post Footer Actions */}
-            <div className="p-5 border-t-2 border-zinc-300 flex flex-col gap-4">
+            <div className="p-5 border-t border-zinc-300 flex flex-col gap-4">
+                {/* Caption Block */}
+                {post.caption && (
+                    <div className={`text-sm text-zinc-600 mt-1  ml-1 leading-relaxed ${!post.image_url || post.image_url.trim() === '' ? 'text-[16px] font-medium leading-relaxed pb-2 text-zinc-800' : ''}`}>
+                        {post.image_url && post.image_url.trim() !== '' && (
+                            <span className="font-black text-zinc-900 mr-2">
+                                {author?.username || author?.name || post.user_email.split('@')[0]}
+                            </span>
+                        )}
+                        {post.caption}
+                    </div>
+                )}
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-6">
                         <button 
@@ -156,19 +167,6 @@ export default function FeedPost({ post, author, currentUserEmail }) {
                 <div className="text-sm font-black text-zinc-900 tracking-wide ml-1">
                     {likesCount} {likesCount === 1 ? 'like' : 'likes'}
                 </div>
-
-                {/* Caption Block */}
-                {post.caption && (
-                    <div className={`text-sm text-zinc-600 mt-1 ml-1 leading-relaxed ${!post.image_url || post.image_url.trim() === '' ? 'text-[16px] font-medium leading-relaxed pb-2 text-zinc-800' : ''}`}>
-                        {post.image_url && post.image_url.trim() !== '' && (
-                            <span className="font-black text-zinc-900 mr-2">
-                                {author?.username || author?.name || post.user_email.split('@')[0]}
-                            </span>
-                        )}
-                        {post.caption}
-                    </div>
-                )}
-                
                 <div className="text-[10px] uppercase font-black tracking-[0.2em] text-zinc-400 ml-1 mt-1">
                     {timeAgo}
                 </div>
