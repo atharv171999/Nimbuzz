@@ -30,38 +30,38 @@ export default function CreateActivityModal({ isOpen, onClose }) {
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-            <div className="w-full max-w-lg bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-                <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-                    <h2 className="text-xl font-bold text-zinc-900 tracking-tight">Create a Community Ping</h2>
-                    <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-xl transition-colors">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div className="w-full max-w-lg bg-white dark:bg-zinc-950 rounded-[2.5rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(147,51,234,0.15)] flex flex-col max-h-[90vh] border border-zinc-200 dark:border-zinc-800 transition-all duration-300">
+                <div className="p-7 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                    <h2 className="text-2xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 dark:text-white tracking-tight">Create a Community Ping</h2>
+                    <button onClick={onClose} className="p-2.5 hover:bg-primary/10 text-primary rounded-2xl transition-all">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
+                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-8 space-y-6">
                     {error && (
-                        <div className="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-xl border border-red-100 italic">
+                        <div className="p-4 bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 text-xs font-bold rounded-2xl border border-red-100 dark:border-red-900/20 italic">
                             {error}
                         </div>
                     )}
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Title</label>
+                            <label className="block text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-1">Title</label>
                             <input 
                                 required
                                 name="title"
                                 placeholder="e.g., Weekend Badminton Match"
-                                className="w-full bg-slate-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-zinc-900 transition-all"
+                                className="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-zinc-800 transition-all"
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Category</label>
+                                <label className="block text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-1">Category</label>
                                 <select 
                                     name="category"
-                                    className="w-full bg-slate-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-zinc-900 transition-all font-medium appearance-none"
+                                    className="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-2xl p-4 text-sm focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-zinc-800 transition-all font-bold appearance-none text-zinc-600 dark:text-zinc-300"
                                 >
                                     <option>Sports</option>
                                     <option>Coffee</option>
@@ -71,57 +71,57 @@ export default function CreateActivityModal({ isOpen, onClose }) {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Max Participants</label>
+                                <label className="block text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-1">Max Participants</label>
                                 <input 
                                     required
                                     type="number"
                                     name="max_participants"
                                     defaultValue="4"
                                     min="2"
-                                    className="w-full bg-slate-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-zinc-900 transition-all"
+                                    className="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-zinc-800 transition-all"
                                 />
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">City / Area</label>
+                                <label className="block text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-1">City / Area</label>
                                 <input 
                                     required
                                     name="city_or_area"
                                     placeholder="e.g., Downtown"
-                                    className="w-full bg-slate-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-zinc-900 transition-all"
+                                    className="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-zinc-800 transition-all"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Exact Location</label>
+                                <label className="block text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-1">Exact Location</label>
                                 <input 
                                     required
                                     name="location_name"
                                     placeholder="e.g., Central Park Courts"
-                                    className="w-full bg-slate-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-zinc-900 transition-all"
+                                    className="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-2xl p-4 text-sm font-medium focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-zinc-800 transition-all"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Event Time</label>
+                            <label className="block text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-1">Event Time</label>
                             <input 
                                 required
                                 type="datetime-local"
                                 name="event_time"
-                                className="w-full bg-slate-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-zinc-900 transition-all"
+                                className="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-zinc-800 transition-all"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Description</label>
+                            <label className="block text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-3 ml-1">Description</label>
                             <textarea 
                                 required
                                 name="description"
                                 rows="3"
                                 placeholder="Tell us more! Level of skill, what to bring, etc."
-                                className="w-full bg-slate-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-zinc-900 transition-all resize-none"
+                                className="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-3xl p-4 text-sm font-medium focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-zinc-800 transition-all resize-none"
                             ></textarea>
                         </div>
                     </div>
@@ -130,7 +130,7 @@ export default function CreateActivityModal({ isOpen, onClose }) {
                         <button 
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full py-4 bg-zinc-950 text-white font-bold rounded-2xl hover:bg-zinc-800 transition-all shadow-xl active:scale-[0.98] disabled:opacity-50"
+                            className="w-full py-5 bg-primary text-white font-black uppercase tracking-widest rounded-3xl hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 active:scale-[0.98] disabled:opacity-50"
                         >
                             {isSubmitting ? 'Posting Ping...' : 'Post Community Ping'}
                         </button>

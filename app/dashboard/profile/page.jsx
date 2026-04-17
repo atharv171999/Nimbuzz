@@ -2,7 +2,7 @@ import { auth } from '@/auth';
 import { getUser, getPostsByEmail, getFollowerCount, getFollowingCount } from '@/app/lib/db';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { SignOutButton } from '@/app/components/SignOutButton';
+import ProfileSettings from './components/ProfileSettings';
 
 export default async function ProfilePage() {
     const session = await auth();
@@ -27,13 +27,18 @@ export default async function ProfilePage() {
     }
 
     return (
-        <div className="flex flex-col min-h-full items-center py-10 w-full relative">
-            <div className="w-full max-w-4xl px-4 md:px-8">
+        <div className="flex flex-col min-h-full items-center py-12 lg:py-16 w-full relative">
+            <div className="w-full max-w-4xl px-4 md:px-8 relative">
                 
+                {/* Mobile Settings Access */}
+                <div className="absolute right-4 top-0 z-50">
+                    <ProfileSettings />
+                </div>
+
                 {/* Profile Header Block */}
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16 mb-12 border-b border-slate-200 pb-12 mt-4">
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-5 md:gap-16 mb-6 border-b border-zinc-200 dark:border-zinc-800 pb-16 mt-4">
                     {/* Avatar */}
-                    <div className="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden border border-slate-200 relative bg-slate-100 shadow-sm">
+                    <div className="w-36 h-36 md:w-48 md:h-48 shrink-0 rounded-full overflow-hidden border-4 border-white dark:border-zinc-800 relative bg-zinc-100 dark:bg-zinc-900 shadow-xl shadow-zinc-200/50 dark:shadow-none transition-transform hover:scale-105 duration-500">
                         {userProfile.profile_picture ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={userProfile.profile_picture} alt={userProfile.username} className="w-full h-full object-cover" />
@@ -43,38 +48,26 @@ export default async function ProfilePage() {
                     </div>
 
                     {/* Meta Data */}
-                    <div className="flex flex-col items-center md:items-start flex-1 gap-4">
-                        <div className="flex items-center justify-between w-full mb-2">
-                            <h2 className="text-3xl font-black text-zinc-900 tracking-tighter">
+                    <div className="flex flex-col  items-center md:items-start flex-1 gap-4">
+                        <div className="flex items-center justify-center md:justify-start w-full mb-4">
+                            <h2 className="text-4xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 dark:text-white tracking-tighter">
                                 {userProfile.username || userProfile.name}
                             </h2>
-                            
-                            {/* Profile Actions - Settings & SignOut (Mobile Accessible) */}
-                            <div className="flex items-center gap-3">
-                                <Link 
-                                    href="/dashboard/settings/personal-account"
-                                    className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-                                    title="Settings"
-                                >
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
-                                </Link>
-                                
-                                <div className="lg:hidden">
-                                     <SignOutButton />
-                                </div>
-                            </div>
                         </div>
 
                         {/* Stats Row */}
-                        <div className="flex items-center gap-8 mb-2">
-                            <div className="text-slate-900 text-base">
-                                <span className="font-semibold block md:inline text-center md:text-left">{userPosts.length}</span> <span className="text-slate-500 font-normal">posts</span>
+                        <div className="flex items-center gap-2  border-y border-zinc-100 dark:border-zinc-800/50 py-3 w-full justify-center md:justify-start">
+                            <div className="text-zinc-900 dark:text-white flex flex-col items-center md:items-start">
+                                <span className="text-3xl font-[family-name:var(--font-outfit)] font-black text-primary leading-none mb-1">{userPosts.length}</span>
+                                <span className="text-zinc-400 dark:text-zinc-500 font-black uppercase text-[10px] tracking-widest">posts</span>
                             </div>
-                            <div className="text-slate-900 text-base">
-                                <span className="font-semibold block md:inline text-center md:text-left">{followersCount}</span> <span className="text-slate-500 font-normal">followers</span>
+                            <div className="text-zinc-900 dark:text-white flex flex-col items-center md:items-start border-x border-zinc-100 dark:border-zinc-800/50 px-10">
+                                <span className="text-3xl font-[family-name:var(--font-outfit)] font-black text-primary leading-none mb-1">{followersCount}</span>
+                                <span className="text-zinc-400 dark:text-zinc-500 font-black uppercase text-[10px] tracking-widest">followers</span>
                             </div>
-                            <div className="text-slate-900 text-base">
-                                <span className="font-semibold block md:inline text-center md:text-left">{followingCount}</span> <span className="text-slate-500 font-normal">following</span>
+                            <div className="text-zinc-900 dark:text-white flex flex-col items-center md:items-start">
+                                <span className="text-3xl font-[family-name:var(--font-outfit)] font-black text-primary leading-none mb-1">{followingCount}</span>
+                                <span className="text-zinc-400 dark:text-zinc-500 font-black uppercase text-[10px] tracking-widest">following</span>
                             </div>
                         </div>
 
@@ -91,43 +84,42 @@ export default async function ProfilePage() {
                 </div>
 
                 {/* Grid Wrapper Navigation */}
-                <div className="flex justify-center border-t border-slate-200 pt-4 mb-6">
-                    <button className="text-sm font-semibold tracking-widest uppercase text-slate-900 flex items-center gap-2 px-4 shadow-[0_-2px_0_currentColor]">
+                <div className="flex justify-center border-zinc-200 dark:border-zinc-800 pt-6 mb-10">
+                    <button className="text-xs font-black tracking-[0.3em] uppercase text-primary flex items-center gap-3 px-6 py-2 rounded-full bg-primary/5 transition-all">
                         {/* Generic SVG for Grid layout to mimic IG */}
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                        Posts
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-4 h-4"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        Feed Highlights
                     </button>
                 </div>
 
-                {/* Image Grid Array */}
-                <div className="grid grid-cols-3 gap-1 md:gap-6">
+                <div className="grid grid-cols-3 gap-2 md:gap-8 lg:gap-12">
                     {userPosts.map((post) => (
-                        <div key={post.id} className="aspect-square relative bg-white border border-slate-200 group cursor-pointer overflow-hidden rounded-sm md:rounded-xl">
+                        <div key={post.id} className="aspect-square relative bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 group cursor-pointer overflow-hidden rounded-2xl md:rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500">
                             {post.image_url ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img 
                                     src={post.image_url} 
                                     alt="Post" 
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                                 />
                             ) : (
-                                <div className="w-full h-full flex flex-col items-center justify-center p-3 sm:p-6 text-center group-hover:scale-105 transition-transform duration-500 bg-zinc-50 border border-zinc-100">
-                                     <p className="text-[9px] sm:text-xs text-zinc-600 line-clamp-4 leading-relaxed font-semibold">
+                                <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 text-center group-hover:scale-110 transition-transform duration-700 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
+                                     <p className="text-[10px] sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-4 leading-relaxed font-bold uppercase tracking-wider">
                                          {post.caption}
                                      </p>
                                 </div>
                             )}
 
                             {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6">
-                                <span className="text-white font-bold flex items-center gap-2">
-                                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M20.8 4.6a5.5 5.5 0 00-7.7 0l-1.1 1-1.1-1a5.5 5.5 0 00-7.8 7.8l1 1 7.9 7.8 8-7.8 1-1a5.5 5.5 0 000-7.8z" /></svg>
-                                    0
+                            <div className="absolute inset-0 bg-primary/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-8">
+                                <span className="text-white font-black flex items-center gap-2 drop-shadow-md">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M20.8 4.6a5.5 5.5 0 00-7.7 0l-1.1 1-1.1-1a5.5 5.5 0 00-7.8 7.8l1 1 7.9 7.8 8-7.8 1-1a5.5 5.5 0 000-7.8z" /></svg>
+                                    <span className="text-lg">0</span>
                                 </span>
                                 {post.caption && (
-                                    <span className="text-white font-bold flex items-center gap-2">
-                                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z" /></svg>
-                                        0
+                                    <span className="text-white font-black flex items-center gap-2 drop-shadow-md">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z" /></svg>
+                                        <span className="text-lg">0</span>
                                     </span>
                                 )}
                             </div>
@@ -136,12 +128,12 @@ export default async function ProfilePage() {
                 </div>
 
                 {userPosts.length === 0 && (
-                    <div className="mt-20 flex flex-col items-center justify-center text-center">
-                        <div className="w-16 h-16 rounded-full border-2 border-slate-300 flex items-center justify-center mb-4">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-slate-400"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <div className="mt-24 flex flex-col items-center justify-center text-center">
+                        <div className="w-20 h-20 rounded-[2rem] bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center mb-6 shadow-xl shadow-zinc-200/50 dark:shadow-none transition-transform hover:rotate-12 duration-500">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Share Photos</h2>
-                        <p className="text-slate-500">When you share photos, they will appear on your profile.</p>
+                        <h2 className="text-3xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 dark:text-white mb-3 tracking-tighter">Share your Moments</h2>
+                        <p className="text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest text-[10px]">Your Highlights will appear here</p>
                     </div>
                 )}
             </div>

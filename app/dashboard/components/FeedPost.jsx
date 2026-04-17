@@ -10,70 +10,70 @@ export default function FeedPost({ post, author }) {
         : 'Just now';
 
     return (
-        <div className="w-full max-w-[470px] lg:mx-auto bg-white border border-zinc-200/80 rounded-2xl lg:rounded-3xl overflow-hidden mb-6 lg:mb-10 shadow-sm lg:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] flex flex-col group">
+        <div className="w-full max-w-[470px] lg:mx-auto bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 rounded-[2.5rem] overflow-hidden mb-8 lg:mb-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.06)] dark:shadow-none flex flex-col group transition-all duration-300">
             
             {/* Post Header */}
-            <div className="flex items-center justify-between p-3 border-b border-slate-100">
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 bg-slate-100 relative shrink-0">
+            <div className="flex items-center justify-between p-5 border-b border-zinc-100 dark:border-zinc-800">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-zinc-50 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 relative shrink-0 shadow-sm transition-all group-hover:border-primary/20">
                         {author?.profile_picture ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={author.profile_picture} alt={author?.username} className="w-full h-full object-cover" />
                         ) : (
-                            <div className="w-full h-full bg-zinc-200 group-hover:scale-105 transition-transform" />
+                            <div className="w-full h-full bg-zinc-200 dark:bg-zinc-800 group-hover:scale-110 transition-transform" />
                         )}
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-sm font-bold text-zinc-900 tracking-tight cursor-pointer hover:opacity-70 transition-opacity">
+                        <span className="text-[15px] font-black text-zinc-900 dark:text-white tracking-tight cursor-pointer hover:text-primary transition-colors">
                             {author?.username || author?.name || post.user_email.split('@')[0]}
                         </span>
                     </div>
                 </div>
-                <button className="p-1 hover:bg-slate-100 rounded-full transition-colors text-slate-500">
+                <button className="p-2 hover:bg-primary/5 rounded-full transition-all text-zinc-400 hover:text-primary">
                     <MoreHorizontalIcon className="w-5 h-5" />
                 </button>
             </div>
 
             {/* Post Image Focus (Conditional) */}
             {post.image_url && post.image_url.trim() !== '' && (
-                <div className="w-full aspect-square relative bg-zinc-50 flex items-center justify-center overflow-hidden border-y border-zinc-100">
+                <div className="w-full aspect-square relative bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                         src={post.image_url} 
                         alt="Post content" 
-                        className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-700 ease-out"
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-1000 ease-out"
                     />
                 </div>
             )}
 
             {/* Post Footer Actions */}
-            <div className="p-3 flex flex-col gap-3">
+            <div className="p-5 flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <button className="text-zinc-600 hover:text-zinc-900 hover:-translate-y-1 transition-all">
-                            <HeartIcon className="w-[26px] h-[26px]" />
+                    <div className="flex items-center gap-6">
+                        <button className="text-zinc-500 dark:text-zinc-400 hover:text-primary transition-all duration-300">
+                            <HeartIcon className="w-[30px] h-[30px]" />
                         </button>
-                        <button className="text-zinc-600 hover:text-zinc-900 hover:-translate-y-1 transition-all">
-                            <MessageCircleIcon className="w-[26px] h-[26px]" />
+                        <button className="text-zinc-500 dark:text-zinc-400 hover:text-primary transition-all duration-300">
+                            <MessageCircleIcon className="w-[30px] h-[30px]" />
                         </button>
-                        <button className="text-zinc-600 hover:text-zinc-900 hover:-translate-y-1 transition-all">
-                            <SendIcon className="w-[26px] h-[26px]" />
+                        <button className="text-zinc-500 dark:text-zinc-400 hover:text-primary transition-all duration-300">
+                            <SendIcon className="w-[30px] h-[30px]" />
                         </button>
                     </div>
-                    <button className="text-zinc-600 hover:text-zinc-900 hover:-translate-y-1 transition-all">
-                        <BookmarkIcon className="w-[26px] h-[26px]" />
+                    <button className="text-zinc-500 dark:text-zinc-400 hover:text-primary hover:-translate-y-1 transition-all duration-300">
+                        <BookmarkIcon className="w-[28px] h-[28px]" />
                     </button>
                 </div>
 
-                <div className="text-sm font-semibold text-slate-900 tracking-wide">
+                <div className="text-sm font-black text-zinc-900 dark:text-white tracking-wide ml-1">
                     0 likes
                 </div>
 
                 {/* Caption Block */}
                 {post.caption && (
-                    <div className={`text-sm text-slate-700 mt-2 ${!post.image_url || post.image_url.trim() === '' ? 'text-[15px] font-normal leading-relaxed pb-2 text-slate-800' : ''}`}>
+                    <div className={`text-sm text-zinc-600 dark:text-zinc-300 mt-1 ml-1 leading-relaxed ${!post.image_url || post.image_url.trim() === '' ? 'text-[16px] font-medium leading-relaxed pb-2 text-zinc-800 dark:text-zinc-200' : ''}`}>
                         {post.image_url && post.image_url.trim() !== '' && (
-                            <span className="font-semibold text-slate-900 mr-2">
+                            <span className="font-black text-zinc-900 dark:text-white mr-2">
                                 {author?.username || author?.name || post.user_email.split('@')[0]}
                             </span>
                         )}
@@ -81,7 +81,7 @@ export default function FeedPost({ post, author }) {
                     </div>
                 )}
                 
-                <div className="text-[10px] uppercase font-semibold tracking-wider text-slate-500 mt-2">
+                <div className="text-[10px] uppercase font-black tracking-[0.2em] text-zinc-400 dark:text-zinc-500 ml-1 mt-1">
                     {timeAgo}
                 </div>
             </div>

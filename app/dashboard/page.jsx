@@ -1,6 +1,8 @@
 import { getUsers, getFeedPosts } from '@/app/lib/db';
 import FeedPost from './components/FeedPost';
 import { auth } from '@/auth';
+import MobileHeader from './components/MobileHeader';
+
 
 export default async function DashboardPage() {
     const session = await auth();
@@ -19,22 +21,16 @@ export default async function DashboardPage() {
     }, {});
 
     return (
-        <div className="flex flex-col min-h-full items-center py-10 w-full relative">
-            
-            {/* Header branding visible mainly on mobile */}
-            <div className="w-full max-w-[470px] flex items-center justify-between mb-8 px-4 md:hidden">
-                <span className="font-black text-2xl drop-shadow-md text-zinc-900">
-                    Nimbus
-                </span>
-                <CameraIcon className="w-6 h-6 text-white" />
-            </div>
-            
+        <div className="flex flex-col min-h-full pt-20 items-center py-5 w-full relative">
+            <MobileHeader/>
             <div className="w-full max-w-3xl flex flex-col items-center pb-20 px-4 md:px-0">
                 {posts.length === 0 ? (
-                    <div className="mt-20 flex flex-col items-center justify-center p-8 text-center bg-white border border-slate-200 rounded-2xl shadow-sm">
-                        <CameraIcon className="w-16 h-16 text-slate-300 mb-4" />
-                        <h2 className="text-2xl font-bold text-slate-900 mb-2">No Posts Yet</h2>
-                        <p className="text-slate-500 max-w-xs">When you or your friends publish photos, they will appear right here in your feed.</p>
+                    <div className="mt-24 flex flex-col items-center justify-center p-12 text-center bg-white/50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-[2.5rem] shadow-sm backdrop-blur-sm">
+                        <div className="w-20 h-20 rounded-[2rem] bg-primary/10 flex items-center justify-center mb-8 shadow-xl shadow-primary/5 transition-transform hover:scale-110 duration-500">
+                            <CameraIcon className="w-10 h-10 text-primary" />
+                        </div>
+                        <h2 className="text-3xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 dark:text-white mb-2 tracking-tighter">Your Feed is Empty</h2>
+                        <p className="text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest text-[10px] max-w-[200px]">Follow users to see their project highlights here</p>
                     </div>
                 ) : (
                     <div className="w-full flex flex-col items-center">

@@ -8,24 +8,24 @@ export default function SignupPage() {
     const [errorMessage, formAction, isPending] = useActionState(signup, undefined);
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            {/* Minimalist background elements */}
-            <div className="absolute top-0 right-1/4 h-96 w-96 translate-x-1/2 translate-y-[-20%] rounded-full bg-zinc-200/40 blur-[120px]"></div>
-            <div className="absolute bottom-0 left-1/4 h-96 w-96 -translate-x-1/2 translate-y-[20%] rounded-full bg-zinc-200/40 blur-[120px]"></div>
+        <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-500">
+            {/* Soft Purple background gradient - GoTripBooking style */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-[-10%] left-[-10%] h-[60%] w-[60%] rounded-full bg-primary/10 blur-[120px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] h-[60%] w-[60%] rounded-full bg-primary/5 blur-[120px]" />
+            </div>
 
-            <div className="w-full max-w-lg my-12 relative z-10">
-                <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl backdrop-blur-xl sm:p-10">
+            <div className="w-full max-w-lg my-12 relative z-10 transition-all duration-500">
+                <div className="rounded-[2.5rem] border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 p-8 shadow-[0_20px_60px_-15px_rgba(147,51,234,0.1)] backdrop-blur-xl sm:p-12">
                     <div className="text-center">
-                        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-900 shadow-md">
-                            <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                            </svg>
+                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/20">
+                            <svg className="h-8 w-8 text-white fill-current" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" /></svg>
                         </div>
-                        <h2 className="mt-6 text-3xl font-black tracking-tighter text-zinc-900">
-                            Create an account
+                        <h2 className="mt-8 text-4xl font-[family-name:var(--font-outfit)] font-black tracking-tighter text-zinc-900 dark:text-white leading-none">
+                            Gather with Nimbuzz
                         </h2>
-                        <p className="mt-2 text-sm text-slate-500">
-                            Join our platform today
+                        <p className="mt-4 text-xs font-black uppercase tracking-[0.3em] text-zinc-400">
+                            Join the community project
                         </p>
                     </div>
 
@@ -144,13 +144,13 @@ export default function SignupPage() {
                             </div>
                         </div>
 
-                        <div className="pt-2">
+                        <div className="pt-4">
                             <button
                                 type="submit"
                                 disabled={isPending}
-                                className="group relative flex w-full justify-center rounded-xl bg-zinc-900 px-4 py-3 text-[15px] font-bold text-white shadow-sm hover:bg-zinc-800 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
+                                className="group relative flex w-full justify-center rounded-2xl bg-primary px-8 py-4.5 text-lg font-black uppercase tracking-widest text-white shadow-xl shadow-primary/20 hover:bg-primary-hover active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed transition-all"
                             >
-                                {isPending ? 'Creating account...' : 'Sign up'}
+                                {isPending ? 'Syncing...' : 'Sign up'}
                             </button>
                         </div>
 

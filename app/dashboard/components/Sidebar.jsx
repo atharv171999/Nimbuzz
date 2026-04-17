@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+// import Image from "next/image";
 import { SignOutButton } from '@/app/components/SignOutButton';
 import CreatePostModal from './CreatePostModal';
 
@@ -13,15 +13,18 @@ export default function Sidebar({ user }) {
 
     return (
         <>
-            <aside className="hidden lg:flex w-[72px] xl:w-[244px] h-full flex-col justify-between border-r border-slate-200 bg-white/70 backdrop-blur-xl text-slate-800 transition-all duration-300">
+            <aside className="hidden lg:flex w-[80px] xl:w-[280px] h-full flex-col justify-between border-r border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl text-zinc-800 dark:text-zinc-200 transition-all duration-500 z-50">
                 <div className="flex flex-col pt-8 pb-4">
                     {/* Identity area */}
-                    <div className="flex items-center px-3 xl:px-6 mb-8 h-10 w-full">
+                    <div className="flex items-center px-4 xl:px-8 mb-12 h-14 w-full">
                         <Link
                             href="/dashboard"
-                            className="hidden xl:block font-black text-[22px] tracking-tighter text-zinc-900 drop-shadow-sm hover:opacity-80 transition-opacity"
+                            className="hidden xl:flex items-center gap-3 font-[family-name:var(--font-outfit)] font-black text-2xl tracking-tighter text-zinc-900 dark:text-white drop-shadow-sm group transition-all"
                         >
-                            {user?.username || user?.name ? `@${user.username || user.name}` : 'Nimbus'}
+                            <div className="bg-primary p-2 rounded-xl text-white shadow-lg shadow-primary/20 group-hover:bg-primary-hover group-hover:rotate-12 transition-all">
+                                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" /></svg>
+                            </div>
+                            Nimbuzz
                         </Link>
                     </div>
 
@@ -74,9 +77,9 @@ export default function Sidebar({ user }) {
                         />
                         <button 
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="group flex items-center p-3 rounded-xl transition-all font-normal text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                            className="group flex items-center p-3.5 rounded-2xl transition-all font-bold text-zinc-500 hover:text-primary hover:bg-primary/5 mt-4"
                         >
-                            <div className="flex items-center justify-center w-6 h-6 shrink-0 transition-transform group-hover:scale-105 group-active:scale-95 text-slate-500 group-hover:text-slate-900">
+                            <div className="flex items-center justify-center w-6 h-6 shrink-0 transition-transform group-hover:scale-110 group-active:scale-95 text-zinc-400 group-hover:text-primary">
                                 <PlusIcon />
                             </div>
                             <span className="hidden xl:block ml-4 text-[15px] leading-5 tracking-wide">
@@ -110,7 +113,7 @@ function NavItem({
     return (
         <Link
             href={href}
-            className={`group flex items-center p-3 rounded-xl transition-all duration-300 ${isActive ? "bg-zinc-900 text-white shadow-md shadow-zinc-200/50" : "font-medium text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100/80"}`}
+            className={`group flex items-center p-3.5 rounded-[1.25rem] transition-all duration-300 ${isActive ? "bg-primary text-white shadow-lg shadow-primary/30" : "font-bold text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"}`}
             title={label}
         >
             <div

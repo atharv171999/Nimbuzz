@@ -1,7 +1,7 @@
 import SecurityForm from './SecurityForm';
 
 export const metadata = {
-    title: 'Security Settings | Nimbus',
+    title: 'Security Settings | Nimbuzz',
     description: 'Manage your password and account security settings.',
 };
 

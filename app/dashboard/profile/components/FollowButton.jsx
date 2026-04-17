@@ -27,7 +27,7 @@ export default function FollowButton({ initialIsFollowing, targetEmail }) {
             <button 
                 onClick={handleToggle}
                 disabled={isPending}
-                className="px-5 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg text-sm font-semibold text-slate-900 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+                className="px-6 py-2.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 rounded-2xl text-sm font-bold text-zinc-600 dark:text-zinc-400 transition-all shadow-sm active:scale-95 disabled:opacity-50"
             >
                 Following
             </button>
@@ -38,7 +38,7 @@ export default function FollowButton({ initialIsFollowing, targetEmail }) {
         <button 
             onClick={handleToggle}
             disabled={isPending}
-            className="px-5 py-2 bg-zinc-900 hover:bg-zinc-800 rounded-lg text-sm font-semibold text-white transition-all shadow-md active:scale-95 disabled:opacity-50"
+            className="px-6 py-2.5 bg-primary hover:bg-primary-hover rounded-2xl text-sm font-black uppercase tracking-wider text-white transition-all shadow-lg shadow-primary/20 active:scale-95 disabled:opacity-50"
         >
             Follow
         </button>

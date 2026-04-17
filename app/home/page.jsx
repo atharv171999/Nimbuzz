@@ -7,26 +7,24 @@ export default async function Home() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center p-6 bg-zinc-950 overflow-hidden selection:bg-zinc-700">
       
-      {/* Soft Background Blobs */}
+      {/* Soft Background Blobs - GoTripBooking style */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-zinc-900/50 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] h-[50%] w-[50%] rounded-full bg-zinc-900/50 blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] h-[60%] w-[60%] rounded-full bg-primary/10 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] h-[60%] w-[60%] rounded-full bg-primary/5 blur-[120px]" />
       </div>
 
       <main className="relative z-10 w-full max-w-lg flex flex-col items-center text-center">
         
         {/* Brand Identity */}
         <div className="flex flex-col items-center mb-10 group">
-          <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-white shadow-[0_0_40px_rgba(255,255,255,0.1)] group-hover:scale-105 transition-transform duration-500 mb-6">
-            <svg className="h-10 w-10 text-zinc-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
+          <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-primary shadow-[0_15px_40px_rgba(147,51,234,0.3)] group-hover:scale-105 transition-transform duration-500 mb-8 border-4 border-white/20">
+            <svg className="h-12 w-12 text-white fill-current" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" /></svg>
           </div>
-          <h1 className="text-4xl font-black tracking-tighter text-white sm:text-5xl">
-            Nimbus
+          <h1 className="text-5xl font-[family-name:var(--font-outfit)] font-black tracking-tighter text-white sm:text-7xl">
+            Nimbuzz
           </h1>
-          <p className="mt-4 text-zinc-400 text-lg sm:text-xl font-medium max-w-xs">
-            Connect with the world at the speed of thought.
+          <p className="mt-4 text-zinc-400 text-lg sm:text-xl font-bold max-w-xs leading-tight">
+            Connect with the world.
           </p>
         </div>
 
@@ -35,7 +33,7 @@ export default async function Home() {
           {session?.user ? (
             <Link 
               href="/dashboard" 
-              className="flex items-center justify-center w-full px-8 py-4 rounded-2xl bg-white text-zinc-950 font-bold text-lg hover:bg-zinc-100 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl"
+              className="flex items-center justify-center w-full px-8 py-5 rounded-[2rem] bg-primary text-white font-black text-xl hover:bg-primary-hover transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_30px_rgba(147,51,234,0.3)]"
             >
               Go to Dashboard
             </Link>
@@ -43,13 +41,13 @@ export default async function Home() {
             <>
               <Link 
                 href="/signup" 
-                className="flex items-center justify-center w-full px-8 py-4 rounded-2xl bg-white text-zinc-950 font-bold text-lg hover:bg-zinc-100 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl"
+                className="flex items-center justify-center w-full px-8 py-5 rounded-[2rem] bg-primary text-white font-black text-xl hover:bg-primary-hover transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_30px_rgba(147,51,234,0.3)]"
               >
                 Create Account
               </Link>
               <Link 
                 href="/login" 
-                className="flex items-center justify-center w-full px-8 py-4 rounded-2xl bg-zinc-900 border border-white/10 text-white font-bold text-lg hover:bg-zinc-800 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="flex items-center justify-center w-full px-8 py-5 rounded-[2rem] bg-zinc-900 border border-white/10 text-white font-bold text-lg hover:bg-zinc-800 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 Sign In
               </Link>
