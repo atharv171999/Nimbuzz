@@ -128,7 +128,7 @@ export default function ChatUI({ initialMessages, myEmail, targetUser }) {
             <div className="p-6 pointer-events-none">
                 <form 
                     onSubmit={handleSend}
-                    className="pointer-events-auto flex items-center gap-4 max-w-2xl mx-auto border border-white/60 rounded-[2rem] pl-6 pr-2 py-2 focus-within:ring-4 focus-within:ring-primary/10 focus-within:border-primary transition-all bg-white/80 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)]"
+                    className="pointer-events-auto flex items-center gap- max-w-2xl mx-auto border border-white/60 rounded-[2rem] pl-6 pr-2 py-2 focus-within:ring-4 focus-within:ring-primary/10 focus-within:border-primary transition-all bg-white/80 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)]"
                 >
                     <input 
                         type="text" 
@@ -140,9 +140,22 @@ export default function ChatUI({ initialMessages, myEmail, targetUser }) {
                     <button 
                         type="submit"
                         disabled={!inputText.trim() || isSending}
-                        className="text-white bg-primary font-black uppercase tracking-widest px-8 rounded-full py-3 text-xs disabled:opacity-50 transition-all hover:bg-primary-hover shadow-lg shadow-primary/10"
+                        className="text-white bg-primary font-black uppercase tracking-widest px-4 sm:px-8 rounded-full py-3 text-xs disabled:opacity-50 transition-all hover:bg-primary-hover shadow-lg shadow-primary/10 flex items-center justify-center min-w-[44px]"
+                        aria-label="Send Message"
                     >
-                        Send
+                        <span className="hidden sm:inline">Send</span>
+                        <svg 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2.5" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            className="w-5 h-5 sm:hidden"
+                        >
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
                     </button>
                 </form>
             </div>
