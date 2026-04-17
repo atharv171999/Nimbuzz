@@ -27,7 +27,7 @@ export default function FollowButton({ initialIsFollowing, targetEmail }) {
             <button 
                 onClick={handleToggle}
                 disabled={isPending}
-                className="px-6 py-2.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 rounded-2xl text-sm font-bold text-zinc-600 dark:text-zinc-400 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+                className="px-6 py-2.5 bg-zinc-100 hover:bg-zinc-200 border border-zinc-200 rounded-2xl text-sm font-bold text-zinc-600 transition-all shadow-sm active:scale-95 disabled:opacity-50"
             >
                 Following
             </button>

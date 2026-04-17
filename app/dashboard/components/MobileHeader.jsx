@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { searchUsersAction } from '@/app/actions/user';
+import { searchUsersAction, getAllUsersAction } from '@/app/actions/user';
 
 export default function MobileHeader() {
     const [isSearching, setIsSearching] = useState(false);
@@ -14,28 +14,42 @@ export default function MobileHeader() {
     const resultsRef = useRef(null);
     const router = useRouter();
 
-    // Debounced Search Logic
+    // Initial and Debounced Search Logic
     useEffect(() => {
-        if (!query.trim()) {
-            setResults([]);
-            return;
-        }
+        const fetchResults = async () => {
+            if (!isSearching) return;
 
-        const timer = setTimeout(async () => {
-            setIsLoading(true);
-            try {
-                const users = await searchUsersAction(query);
-                setResults(users);
-            } catch (err) {
-                console.error(err);
-                setResults([]);
-            } finally {
-                setIsLoading(false);
+            if (!query.trim()) {
+                setIsLoading(true);
+                try {
+                    const users = await getAllUsersAction();
+                    setResults(users);
+                } catch (err) {
+                    console.error(err);
+                } finally {
+                    setIsLoading(false);
+                }
+                return;
             }
-        }, 300);
 
-        return () => clearTimeout(timer);
-    }, [query]);
+            const timer = setTimeout(async () => {
+                setIsLoading(true);
+                try {
+                    const users = await searchUsersAction(query);
+                    setResults(users);
+                } catch (err) {
+                    console.error(err);
+                    setResults([]);
+                } finally {
+                    setIsLoading(false);
+                }
+            }, 300);
+
+            return () => clearTimeout(timer);
+        };
+
+        fetchResults();
+    }, [query, isSearching]);
 
     // Auto-focus input
     useEffect(() => {
@@ -79,11 +93,11 @@ export default function MobileHeader() {
     return (
         <div className="lg:hidden fixed top-4 inset-x-0 z-50 px-4 flex flex-col items-center pointer-events-none">
             {/* Header Pill */}
-            <header className={`pointer-events-auto h-14 w-full max-w-sm flex items-center transition-all duration-500 ease-out bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/40 dark:border-zinc-800/40 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.08)] overflow-hidden ${isSearching ? 'px-2' : 'px-6 justify-between'}`}>
+            <header className={`pointer-events-auto h-14 w-full max-w-sm flex items-center transition-all duration-500 ease-out bg-white/80 backdrop-blur-xl border border-white/40 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.08)] overflow-hidden ${isSearching ? 'px-2' : 'px-6 justify-between'}`}>
                 
                 {!isSearching ? (
                     <>
-                        <Link href="/dashboard" className="font-[family-name:var(--font-outfit)] font-black text-xl tracking-tighter text-zinc-900 dark:text-white flex items-center gap-2 group transition-all duration-500">
+                        <Link href="/dashboard" className="font-[family-name:var(--font-outfit)] font-black text-xl tracking-tighter text-zinc-900 flex items-center gap-2 group transition-all duration-500">
                             <div className="bg-primary p-1.5 rounded-lg text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
                                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" /></svg>
                             </div>
@@ -114,16 +128,16 @@ export default function MobileHeader() {
                             <input 
                                 ref={inputRef}
                                 type="text"
-                                placeholder="Search usernames..."
+                                placeholder="Search users..."
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                className="w-full bg-zinc-50 dark:bg-zinc-800/50 border-none rounded-full py-2 pl-10 pr-4 text-sm font-bold text-zinc-900 dark:text-white placeholder-zinc-400 focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                                className="w-full bg-zinc-50 border-none rounded-full py-2 pl-10 pr-4 text-sm font-bold text-zinc-900 placeholder-zinc-400 focus:ring-2 focus:ring-primary/20 transition-all outline-none"
                             />
                         </div>
                         <button 
                             type="button" 
                             onClick={closeSearch}
-                            className="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors"
+                            className="p-2 text-zinc-400 hover:text-zinc-600 transition-colors"
                         >
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
@@ -135,18 +149,18 @@ export default function MobileHeader() {
             {isSearching && results.length > 0 && (
                 <div 
                     ref={resultsRef}
-                    className="pointer-events-auto mt-2 w-full max-w-sm bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl border border-white/40 dark:border-zinc-800/40 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] flex flex-col p-2 animate-in fade-in slide-in-from-top-4 duration-300 max-h-[320px] overflow-y-auto no-scrollbar"
+                    className="pointer-events-auto mt-2 w-full max-w-sm bg-white/95 backdrop-blur-2xl border border-white/40 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] flex flex-col p-2 animate-in fade-in slide-in-from-top-4 duration-300 max-h-[320px] overflow-y-auto no-scrollbar"
                 >
-                    <div className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-zinc-400 border-b border-zinc-100 dark:border-zinc-800/50 mb-2">
+                    <div className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-zinc-400 border-b border-zinc-100 mb-2">
                         Suggested Users
                     </div>
                     {results.map((user) => (
                         <button
                             key={user.id}
                             onClick={() => handleUserSelect(user.username)}
-                            className="flex items-center gap-4 p-3 rounded-2xl hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all duration-200 group text-left"
+                            className="flex items-center gap-4 p-3 rounded-2xl hover:bg-zinc-50 transition-all duration-200 group text-left"
                         >
-                            <div className="h-10 w-10 rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden shrink-0 border-2 border-white dark:border-zinc-800 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                            <div className="h-10 w-10 rounded-full bg-zinc-100 overflow-hidden shrink-0 border-2 border-white shadow-sm group-hover:scale-110 transition-transform duration-300">
                                 {user.profile_picture ? (
                                     // eslint-disable-next-line @next/next/no-img-element
                                     <img src={user.profile_picture} alt={user.username} className="w-full h-full object-cover" />
@@ -157,14 +171,12 @@ export default function MobileHeader() {
                                 )}
                             </div>
                             <div className="flex flex-col flex-1 overflow-hidden">
-                                <span className="text-sm font-black text-zinc-900 dark:text-white tracking-tight truncate group-hover:text-primary transition-colors">
-                                    {user.username}
+                                <span className="text-sm font-black text-zinc-900 tracking-tight truncate group-hover:text-primary transition-colors">
+                                    {user.name || 'Citizen'}
                                 </span>
-                                {user.name && (
-                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wide truncate">
-                                        {user.name}
-                                    </span>
-                                )}
+                                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wide truncate">
+                                    @{user.username || 'unknown'}
+                                </span>
                             </div>
                             <div className="text-zinc-300 group-hover:translate-x-1 group-hover:text-primary transition-all duration-300">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><polyline points="9 18 15 12 9 6"></polyline></svg>

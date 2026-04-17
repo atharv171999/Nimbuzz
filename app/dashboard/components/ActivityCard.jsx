@@ -112,7 +112,7 @@ export default function ActivityCard({ activity, currentUserEmail }) {
                 </div>
                 <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div
-                        className={`h-full transition-all duration-500 ${isFull ? 'bg-orange-500' : 'bg-zinc-950'}`}
+                        className={`h-full transition-all duration-500 ${isFull ? 'bg-orange-500' : 'bg-primary'}`}
                         style={{ width: `${(participants.length / activity.max_participants) * 100}%` }}
                     />
                 </div>
@@ -145,7 +145,7 @@ export default function ActivityCard({ activity, currentUserEmail }) {
                         onClick={handleJoin}
                         disabled={isPending || isFull}
                         className={`w-full py-2.5 rounded-xl font-bold text-sm tracking-tight transition-all active:scale-[0.98] disabled:opacity-50 
-                            ${isFull ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-zinc-950 text-white hover:bg-zinc-800 shadow-sm'}
+                            ${isFull ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-hover shadow-sm'}
                         `}
                     >
                         {isPending ? 'Processing...' : isFull ? 'Event Full' : 'Join Ping'}

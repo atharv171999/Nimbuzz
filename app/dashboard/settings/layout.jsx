@@ -8,8 +8,6 @@ export default function SettingsLayout({ children }) {
 
     const tabs = [
         { name: "Personal Account", href: "/dashboard/settings/personal-account" },
-        { name: "Privacy & Safety", href: "/dashboard/settings/privacy" },
-        { name: "Notifications", href: "/dashboard/settings/notifications" },
         { name: "Security", href: "/dashboard/settings/security" },
     ];
 

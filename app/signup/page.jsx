@@ -8,7 +8,7 @@ export default function SignupPage() {
     const [errorMessage, formAction, isPending] = useActionState(signup, undefined);
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-500">
+        <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-500">
             {/* Soft Purple background gradient - GoTripBooking style */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[-10%] left-[-10%] h-[60%] w-[60%] rounded-full bg-primary/10 blur-[120px]" />
@@ -16,12 +16,12 @@ export default function SignupPage() {
             </div>
 
             <div className="w-full max-w-lg my-12 relative z-10 transition-all duration-500">
-                <div className="rounded-[2.5rem] border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 p-8 shadow-[0_20px_60px_-15px_rgba(147,51,234,0.1)] backdrop-blur-xl sm:p-12">
+                <div className="rounded-[2.5rem] border border-zinc-200 bg-white/95 p-8 shadow-[0_20px_60px_-15px_rgba(147,51,234,0.1)] backdrop-blur-xl sm:p-12">
                     <div className="text-center">
                         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/20">
                             <svg className="h-8 w-8 text-white fill-current" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" /></svg>
                         </div>
-                        <h2 className="mt-8 text-4xl font-[family-name:var(--font-outfit)] font-black tracking-tighter text-zinc-900 dark:text-white leading-none">
+                        <h2 className="mt-8 text-4xl font-[family-name:var(--font-outfit)] font-black tracking-tighter text-zinc-900 leading-none">
                             Gather with Nimbuzz
                         </h2>
                         <p className="mt-4 text-xs font-black uppercase tracking-[0.3em] text-zinc-400">
@@ -33,7 +33,7 @@ export default function SignupPage() {
                         <div className="space-y-4">
                             <div>
                                 <label htmlFor="email-address" className="block text-sm font-bold text-slate-900 mb-1">
-                                    Mobile number or email address
+                                    Email address
                                 </label>
                                 <div className="mt-1">
                                     <input
@@ -43,7 +43,7 @@ export default function SignupPage() {
                                         autoComplete="email"
                                         required
                                         className="block w-full rounded-xl border-0 bg-zinc-50 py-3 px-4 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-200 focus:ring-2 focus:ring-inset focus:ring-zinc-900 sm:text-sm sm:leading-6 placeholder:text-zinc-400 transition-all font-medium"
-                                        placeholder="Mobile number or email address"
+                                        placeholder="Email address"
                                     />
                                 </div>
                             </div>

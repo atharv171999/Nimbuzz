@@ -13,13 +13,13 @@ export default function Sidebar({ user }) {
 
     return (
         <>
-            <aside className="hidden lg:flex w-[80px] xl:w-[280px] h-full flex-col justify-between border-r border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl text-zinc-800 dark:text-zinc-200 transition-all duration-500 z-50">
+            <aside className="hidden lg:flex w-[80px] xl:w-[280px] h-full flex-col justify-between border-r border-zinc-200 bg-white/90 backdrop-blur-xl text-zinc-800 transition-all duration-500 z-50">
                 <div className="flex flex-col pt-8 pb-4">
                     {/* Identity area */}
                     <div className="flex items-center px-4 xl:px-8 mb-12 h-14 w-full">
                         <Link
                             href="/dashboard"
-                            className="hidden xl:flex items-center gap-3 font-[family-name:var(--font-outfit)] font-black text-2xl tracking-tighter text-zinc-900 dark:text-white drop-shadow-sm group transition-all"
+                            className="hidden xl:flex items-center gap-3 font-[family-name:var(--font-outfit)] font-black text-2xl tracking-tighter text-zinc-900 drop-shadow-sm group transition-all"
                         >
                             <div className="bg-primary p-2 rounded-xl text-white shadow-lg shadow-primary/20 group-hover:bg-primary-hover group-hover:rotate-12 transition-all">
                                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" /></svg>
@@ -53,13 +53,6 @@ export default function Sidebar({ user }) {
                             isActive={pathname === "/dashboard/messages"}
                             icon={<MessagesIcon />}
                         />
-                        <NavItem
-                            href="/dashboard/notifications"
-                            label="Notifications"
-                            isActive={pathname === "/dashboard/notifications"}
-                            icon={<NotificationsIcon />}
-                        />
-                        
                         <NavItem
                             href="/dashboard/profile"
                             label="Profile"
@@ -113,7 +106,7 @@ function NavItem({
     return (
         <Link
             href={href}
-            className={`group flex items-center p-3.5 rounded-[1.25rem] transition-all duration-300 ${isActive ? "bg-primary text-white shadow-lg shadow-primary/30" : "font-bold text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"}`}
+            className={`group flex items-center p-3.5 rounded-[1.25rem] transition-all duration-300 ${isActive ? "bg-primary text-white shadow-lg shadow-primary/30" : "font-bold text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100"}`}
             title={label}
         >
             <div
@@ -214,25 +207,8 @@ const MessagesIcon = () => (
         strokeLinejoin="round"
         className="w-full h-full currentColor"
     >
-        <line x1="22" y1="2" x2="11" y2="13" />
-        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
     </svg>
-);
-
-const NotificationsIcon = () => (
-    <div className="relative w-full h-full">
-        <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-full h-full currentColor"
-        >
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-        </svg>
-    </div>
 );
 
 const MoreIcon = () => (

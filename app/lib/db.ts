@@ -19,6 +19,8 @@ export interface Post {
     image_url: string;
     caption?: string;
     created_at?: string;
+    likes_count?: number;
+    user_has_liked?: boolean;
 }
 
 export interface Message {
@@ -107,6 +109,18 @@ export async function createPost(post: Partial<Post>): Promise<void> {
     }
 }
 
+export async function deletePost(postId: string): Promise<void> {
+    const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId);
+
+    if (error) {
+        console.error('Error deleting post in Supabase:', error);
+        throw error;
+    }
+}
+
 export async function getPosts(): Promise<Post[]> {
     const { data, error } = await supabase
         .from('posts')
@@ -163,7 +177,55 @@ export async function getFeedPosts(userEmail: string): Promise<Post[]> {
         return [];
     }
     
-    return posts || [];
+    // 4. Fetch like counts and status for each post
+    const postsWithLikes = await Promise.all((posts || []).map(async (post) => {
+        const { likesCount, userHasLiked } = await getPostLikeData(post.id, userEmail);
+        return {
+            ...post,
+            likes_count: likesCount,
+            user_has_liked: userHasLiked
+        };
+    }));
+    
+    return postsWithLikes;
+}
+
+export async function toggleLike(postId: string, userEmail: string): Promise<void> {
+    const { data: existingLike } = await supabase
+        .from('post_likes')
+        .select('id')
+        .match({ post_id: postId, user_email: userEmail })
+        .maybeSingle();
+
+    if (existingLike) {
+        await supabase
+            .from('post_likes')
+            .delete()
+            .match({ post_id: postId, user_email: userEmail });
+    } else {
+        await supabase
+            .from('post_likes')
+            .insert([{ post_id: postId, user_email: userEmail }]);
+    }
+}
+
+export async function getPostLikeData(postId: string, userEmail?: string) {
+    const { count: likesCount } = await supabase
+        .from('post_likes')
+        .select('*', { count: 'exact', head: true })
+        .eq('post_id', postId);
+
+    let userHasLiked = false;
+    if (userEmail) {
+        const { data } = await supabase
+            .from('post_likes')
+            .select('id')
+            .match({ post_id: postId, user_email: userEmail })
+            .maybeSingle();
+        userHasLiked = !!data;
+    }
+
+    return { likesCount: likesCount || 0, userHasLiked };
 }
 
 export async function searchUsers(query: string): Promise<User[]> {
@@ -172,7 +234,7 @@ export async function searchUsers(query: string): Promise<User[]> {
     const { data, error } = await supabase
         .from('users')
         .select('*')
-        .ilike('username', `%${query}%`)
+        .or(`username.ilike.%${query}%,name.ilike.%${query}%`)
         .limit(20);
 
     if (error) {

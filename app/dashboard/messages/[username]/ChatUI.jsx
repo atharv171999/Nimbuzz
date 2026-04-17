@@ -63,23 +63,23 @@ export default function ChatUI({ initialMessages, myEmail, targetUser }) {
     };
 
     return (
-        <div className="flex flex-col h-full bg-zinc-50 dark:bg-zinc-950 relative transition-colors duration-500">
+        <div className="flex flex-col h-full bg-zinc-50 relative transition-colors duration-500">
             {/* Thread Header */}
-            <div className="px-8 py-6 flex items-center justify-between bg-white/40 dark:bg-zinc-900/40 backdrop-blur-xl sticky top-0 z-10 transition-all duration-300 border-b border-zinc-200/50 dark:border-zinc-800/50">
-                <Link href={`/dashboard/profile/${targetUser.username}`} className="flex items-center gap-5 group px-4 py-2 rounded-2xl hover:bg-white/50 dark:hover:bg-zinc-800/50 transition-all">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-100 dark:border-zinc-800 shrink-0 bg-zinc-50 dark:bg-zinc-900 group-hover:border-primary group-hover:scale-105 transition-all duration-500">
+            <div className="px-8 py-6 flex items-center justify-between bg-white/40 backdrop-blur-xl sticky top-0 z-10 transition-all duration-300 border-b border-zinc-200/50">
+                <Link href={`/dashboard/profile/${targetUser.username}`} className="flex items-center gap-5 group px-4 py-2 rounded-2xl hover:bg-white/50 transition-all">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-100 shrink-0 bg-zinc-50 group-hover:border-primary group-hover:scale-105 transition-all duration-500">
                         {targetUser.profile_picture ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={targetUser.profile_picture} alt={targetUser.username} className="w-full h-full object-cover" />
                         ) : (
-                            <div className="w-full h-full bg-zinc-200 dark:bg-zinc-800" />
+                            <div className="w-full h-full bg-zinc-200" />
                         )}
                     </div>
                     <div>
-                        <h2 className="font-[family-name:var(--font-outfit)] font-black text-2xl text-zinc-900 dark:text-white tracking-tighter group-hover:text-primary transition-colors">
+                        <h2 className="font-[family-name:var(--font-outfit)] font-black text-2xl text-zinc-900 tracking-tighter group-hover:text-primary transition-colors">
                             {targetUser.name || targetUser.username || targetUser.email.split('@')[0]}
                         </h2>
-                        <p className="text-[10px] uppercase font-black tracking-widest text-zinc-400 dark:text-zinc-500">
+                        <p className="text-[10px] uppercase font-black tracking-widest text-zinc-400">
                             @{targetUser.username || targetUser.email.split('@')[0]}
                         </p>
                     </div>
@@ -112,7 +112,7 @@ export default function ChatUI({ initialMessages, myEmail, targetUser }) {
                                         max-w-[75%] px-6 py-4 rounded-[1.75rem] text-[15px] leading-relaxed shadow-sm
                                         ${isMe 
                                             ? 'bg-primary text-white rounded-br-none shadow-lg shadow-primary/10' 
-                                            : 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200/50 dark:border-zinc-800/50 rounded-bl-none'
+                                            : 'bg-white text-zinc-900 border border-zinc-200/50 rounded-bl-none'
                                         }
                                     `}
                                 >
@@ -128,14 +128,14 @@ export default function ChatUI({ initialMessages, myEmail, targetUser }) {
             <div className="p-6 pointer-events-none">
                 <form 
                     onSubmit={handleSend}
-                    className="pointer-events-auto flex items-center gap-4 max-w-2xl mx-auto border border-white/60 dark:border-zinc-800/60 rounded-[2rem] pl-6 pr-2 py-2 focus-within:ring-4 focus-within:ring-primary/10 focus-within:border-primary transition-all bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)]"
+                    className="pointer-events-auto flex items-center gap-4 max-w-2xl mx-auto border border-white/60 rounded-[2rem] pl-6 pr-2 py-2 focus-within:ring-4 focus-within:ring-primary/10 focus-within:border-primary transition-all bg-white/80 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)]"
                 >
                     <input 
                         type="text" 
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
-                        placeholder="Type something..."
-                        className="flex-1 bg-transparent border-0 focus:ring-0 text-zinc-900 dark:text-white text-[15px] placeholder:text-zinc-400 py-2.5 font-bold tracking-tight"
+                        placeholder="Chat..."
+                        className="flex-1 bg-transparent border-none outline-none text-[20px] py-1 tracking-tight"
                     />
                     <button 
                         type="submit"

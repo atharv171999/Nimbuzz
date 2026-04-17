@@ -26,26 +26,26 @@ export default function ProfileSettings() {
         <div className="relative md:hidden" ref={dropdownRef}>
             <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2.5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 active:scale-95 transition-all shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                className="p-2.5 rounded-2xl bg-white border border-zinc-200 text-zinc-600 active:scale-95 transition-all shadow-sm hover:bg-zinc-50"
                 aria-label="Settings"
             >
                 <SettingsIcon className="w-5 h-5" />
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-3 w-48 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-2xl z-[100] py-2 overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+                <div className="absolute right-0 mt-3 w-48 bg-white/95 backdrop-blur-xl border border-zinc-200/50 rounded-2xl shadow-2xl z-[100] py-2 overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right">
                     <Link 
                         href="/dashboard/settings/personal-account"
-                        className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+                        className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-zinc-600 hover:bg-zinc-50 transition-colors"
                         onClick={() => setIsOpen(false)}
                     >
                         <MoreIcon className="w-4 h-4" />
                         More
                     </Link>
-                    <div className="h-px bg-zinc-100 dark:bg-zinc-800 my-1 mx-2" />
+                    <div className="h-px bg-zinc-100 my-1 mx-2" />
                     <button 
                         onClick={handleSignOut}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors text-left"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors text-left"
                     >
                         <LogOutIcon className="w-4 h-4" />
                         Sign out

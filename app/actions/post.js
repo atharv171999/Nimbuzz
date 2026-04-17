@@ -62,3 +62,48 @@ export async function createPostAction(prevState, formData) {
         return { error: error.message || 'An error occurred while creating the post.' };
     }
 }
+
+export async function toggleLikePostAction(postId) {
+    try {
+        const session = await auth();
+        if (!session?.user?.email) {
+            throw new Error('Not authenticated');
+        }
+
+        const { toggleLike } = await import('@/app/lib/db');
+        await toggleLike(postId, session.user.email);
+        
+        revalidatePath('/dashboard');
+        return { success: true };
+    } catch (error) {
+        console.error("Toggle Like Error:", error);
+        return { error: error.message };
+    }
+}
+
+export async function deletePostAction(postId) {
+    try {
+        const session = await auth();
+        if (!session?.user?.email) {
+            throw new Error('Not authenticated');
+        }
+
+        const { deletePost, getPostsByEmail } = await import('@/app/lib/db');
+        
+        // Security check: Verify post ownership
+        const userPosts = await getPostsByEmail(session.user.email);
+        const isOwner = userPosts.some(p => p.id === postId);
+        
+        if (!isOwner) {
+            throw new Error('You do not have permission to delete this post');
+        }
+
+        await deletePost(postId);
+        
+        revalidatePath('/dashboard');
+        return { success: true };
+    } catch (error) {
+        console.error("Delete Post Error:", error);
+        return { error: error.message };
+    }
+}

@@ -18,12 +18,12 @@ export default async function SearchPage({ searchParams }) {
     }
 
     return (
-        <div className="flex flex-col min-h-full items-center py-6 lg:py-16 w-full relative px-6 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-500">
-             <h1 className="hidden lg:block text-6xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 dark:text-white mb-12 tracking-tighter">
+        <div className="flex flex-col min-h-full items-center py-6 lg:py-16 w-full relative px-6 bg-zinc-50 transition-colors duration-500">
+             <h1 className="hidden lg:block text-6xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 mb-12 tracking-tighter">
                  Explore
              </h1>
              
-             <SearchInput className="shadow-xl shadow-zinc-200/50 dark:shadow-none" />
+             <SearchInput className="shadow-xl shadow-zinc-200/50" />
 
              <div className="w-full max-w-xl flex flex-col gap-5 mt-8 relative z-10">
                  {!query && matchedUsers.length > 0 && (
@@ -35,20 +35,20 @@ export default async function SearchPage({ searchParams }) {
                  
                   {/* Results List */}
                   {matchedUsers.map(user => (
-                      <Link href={user.username ? `/dashboard/profile/${user.username}` : '#'} key={user.id} className="group flex items-center gap-6 bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 rounded-[2.5rem] p-6 hover:border-primary transition-all cursor-pointer shadow-sm hover:shadow-xl hover:shadow-primary/5">
-                           <div className="relative h-20 w-20 rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden shrink-0 border-4 border-white dark:border-zinc-800 transition-all group-hover:scale-105 duration-500 shadow-md">
+                      <Link href={user.username ? `/dashboard/profile/${user.username}` : '#'} key={user.id} className="group flex items-center gap-6 bg-white border border-zinc-200/50 rounded-[2.5rem] p-6 hover:border-primary transition-all cursor-pointer shadow-sm hover:shadow-xl hover:shadow-primary/5">
+                           <div className="relative h-20 w-20 rounded-full bg-zinc-100 overflow-hidden shrink-0 border-4 border-white transition-all group-hover:scale-105 duration-500 shadow-md">
                                 {user.profile_picture ? (
                                     // eslint-disable-next-line @next/next/no-img-element
                                     <img src={user.profile_picture} alt="Profile" className="w-full h-full object-cover" />
                                 ) : (
-                                    <div className="w-full h-full bg-zinc-50 dark:bg-zinc-800" />
+                                    <div className="w-full h-full bg-zinc-50" />
                                 )}
                            </div>
                            <div className="flex flex-col flex-1 overflow-hidden ml-2">
-                                <span className="font-black text-2xl text-zinc-900 dark:text-white tracking-tighter truncate group-hover:text-primary transition-colors">
-                                    {user.username || 'Citizen'}
+                                <span className="font-black text-2xl text-zinc-900 tracking-tighter truncate group-hover:text-primary transition-colors">
+                                    {user.name || 'Citizen'}
                                 </span>
-                                <span className="text-xs font-black uppercase tracking-widest text-zinc-400 truncate">{user.name || user.email}</span>
+                                <span className="text-xs font-black uppercase tracking-widest text-zinc-400 truncate">@{user.username || 'unknown'}</span>
                            </div>
                            <div className="hidden sm:block">
                                <button className="px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-2xl text-[10px] font-black tracking-widest uppercase transition-all shadow-xl shadow-primary/20 active:scale-95">

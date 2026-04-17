@@ -21,16 +21,16 @@ export default async function DashboardPage() {
     }, {});
 
     return (
-        <div className="flex flex-col min-h-full pt-20 items-center py-5 w-full relative">
+        <div className="flex flex-col min-h-full pt-30 items-center py-5 w-full relative">
             <MobileHeader/>
             <div className="w-full max-w-3xl flex flex-col items-center pb-20 px-4 md:px-0">
                 {posts.length === 0 ? (
-                    <div className="mt-24 flex flex-col items-center justify-center p-12 text-center bg-white/50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-[2.5rem] shadow-sm backdrop-blur-sm">
+                    <div className="mt-24 flex flex-col items-center justify-center p-12 text-center bg-white/50 border border-zinc-200 rounded-[2.5rem] shadow-sm backdrop-blur-sm">
                         <div className="w-20 h-20 rounded-[2rem] bg-primary/10 flex items-center justify-center mb-8 shadow-xl shadow-primary/5 transition-transform hover:scale-110 duration-500">
                             <CameraIcon className="w-10 h-10 text-primary" />
                         </div>
-                        <h2 className="text-3xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 dark:text-white mb-2 tracking-tighter">Your Feed is Empty</h2>
-                        <p className="text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest text-[10px] max-w-[200px]">Follow users to see their project highlights here</p>
+                        <h2 className="text-3xl font-[family-name:var(--font-outfit)] font-black text-zinc-900 mb-2 tracking-tighter">Your Feed is Empty</h2>
+                        <p className="text-zinc-400 font-bold uppercase tracking-widest text-[10px] max-w-[200px]">Follow users to see their project highlights here</p>
                     </div>
                 ) : (
                     <div className="w-full flex flex-col items-center">
@@ -39,6 +39,7 @@ export default async function DashboardPage() {
                                 key={post.id} 
                                 post={post} 
                                 author={usersByEmail[post.user_email]} 
+                                currentUserEmail={email}
                             />
                         ))}
                     </div>

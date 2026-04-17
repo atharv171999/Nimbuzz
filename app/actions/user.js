@@ -25,3 +25,22 @@ export async function searchUsersAction(query) {
         return [];
     }
 }
+
+/**
+ * Server action to get a list of users for suggestions.
+ */
+export async function getAllUsersAction() {
+    try {
+        const { getUsers } = await import('@/app/lib/db');
+        const users = await getUsers();
+        return users.map(user => ({
+            id: user.id,
+            username: user.username,
+            name: user.name,
+            profile_picture: user.profile_picture
+        }));
+    } catch (error) {
+        console.error('Error in getAllUsersAction:', error);
+        return [];
+    }
+}

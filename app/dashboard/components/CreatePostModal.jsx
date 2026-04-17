@@ -77,7 +77,7 @@ export default function CreatePostModal({ isOpen, onClose, user }) {
                                 <ImageIcon className="w-16 h-16 text-slate-400 mx-auto mb-4 border-2 border-slate-300 rounded-xl p-3" />
                                 <h3 className="text-xl font-medium text-slate-800 mb-2">Drag photos here</h3>
                                 <p className="text-slate-500 text-sm mb-6">Or simply click to browse your files.</p>
-                                <button type="button" onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 rounded-lg text-white text-sm font-medium transition-colors">
+                                <button type="button" onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-primary hover:bg-primary-hover rounded-lg text-white text-sm font-medium transition-colors">
                                     Select from computer
                                 </button>
                             </div>
@@ -146,7 +146,7 @@ export default function CreatePostModal({ isOpen, onClose, user }) {
                             <button 
                                 type="submit" 
                                 disabled={isPending || (!previewImage && !caption.trim())}
-                                className="w-full flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white py-2.5 rounded-lg text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                                className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white py-2.5 rounded-lg text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                             >
                                 {isPending ? (
                                     <>
