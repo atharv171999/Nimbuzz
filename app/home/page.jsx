@@ -1,6 +1,11 @@
 import { auth } from '@/auth';
 import Link from 'next/link';
 
+export const metadata = {
+  title: "Home",
+  description: "Nimbuzz - The next generation of social interaction. Join millions sharing their lives and passions.",
+};
+
 export default async function Home() {
   const session = await auth();
 

@@ -3,6 +3,11 @@ import FeedPost from './components/FeedPost';
 import { auth } from '@/auth';
 import MobileHeader from './components/MobileHeader';
 
+export const metadata = {
+  title: "Dashboard",
+  description: "Your personalized Nimbuzz feed. Stay updated with your community, highlights, and connections.",
+};
+
 
 export default async function DashboardPage() {
     const session = await auth();

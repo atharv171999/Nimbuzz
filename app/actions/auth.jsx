@@ -2,7 +2,7 @@
 
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
-import { createUser, getUser } from '@/app/lib/db';
+import { createUser, getUser, getUserByUsername } from '@/app/lib/db';
 import bcrypt from 'bcryptjs';
 
 export async function login(
@@ -30,9 +30,9 @@ export async function signup(
     formData,
 ) {
     const name = formData.get('name');
-    const email = formData.get('email');
+    const email = formData.get('email')?.toString().toLowerCase();
     const password = formData.get('password');
-    const username = formData.get('username');
+    const username = formData.get('username')?.toString().toLowerCase();
     const dobDay = formData.get('dobDay');
     const dobMonth = formData.get('dobMonth');
     const dobYear = formData.get('dobYear');
@@ -45,16 +45,27 @@ export async function signup(
     const existingUser = await getUser(email);
     if (existingUser) return 'A user with this email already exists';
 
+    const existingUsername = await getUserByUsername(username);
+    if (existingUsername) return 'Username is already taken';
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await createUser({
-        id: Date.now().toString(),
-        name,
-        username,
-        email,
-        password: hashedPassword,
-        date_of_birth,
-    });
+    try {
+        await createUser({
+            id: Date.now().toString(),
+            name,
+            username,
+            email,
+            password: hashedPassword,
+            date_of_birth,
+        });
+    } catch (error) {
+        console.error('Signup Error:', error);
+        if (error.code === '23505') {
+            return 'A user with this email or username already exists.';
+        }
+        return 'An unexpected error occurred during signup.';
+    }
 
     try {
         const payload = Object.fromEntries(formData);

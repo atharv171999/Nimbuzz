@@ -14,8 +14,8 @@ export default async function ProfilePage() {
 
     return (
         <div className="w-full">
-            <h2 className="text-xl font-bold text-white mb-6">Personal Information</h2>
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8 shadow-2xl backdrop-blur-xl shrink-0">
+            <h2 className="text-xl font-bold text-slate-900 mb-6">Personal Information</h2>
+            <div className="rounded-[2.5rem] border border-zinc-200 bg-white p-6 sm:p-8 shadow-sm shrink-0">
                 <ProfileForm user={user} />
             </div>
         </div>

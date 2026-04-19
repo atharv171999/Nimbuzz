@@ -28,26 +28,31 @@ export async function createActivity(formData) {
     const eventTime = formData.get('event_time');
     const maxParticipants = parseInt(formData.get('max_participants') || '10');
 
-    const { error } = await supabase
-        .from('activities')
-        .insert([{
-            creator_id: userData.id,
-            title,
-            description,
-            category,
-            location_name: locationName,
-            city_or_area: cityOrArea,
-            event_time: eventTime,
-            max_participants: maxParticipants
-        }]);
+    try {
+        const { error } = await supabase
+            .from('activities')
+            .insert([{
+                creator_id: userData.id,
+                title,
+                description,
+                category,
+                location_name: locationName,
+                city_or_area: cityOrArea,
+                event_time: eventTime,
+                max_participants: maxParticipants
+            }]);
 
-    if (error) {
-        console.error('Error creating activity:', error.message, error.details);
-        return { error: `Failed to create activity: ${error.message}` };
+        if (error) {
+            console.error('Error creating activity:', error.message, error.details);
+            return { error: `Failed to create activity: ${error.message}` };
+        }
+
+        revalidatePath('/dashboard/society');
+        return { success: true };
+    } catch (e) {
+        console.error('Unexpected error creating activity:', e);
+        return { error: 'An unexpected error occurred while creating the activity.' };
     }
-
-    revalidatePath('/dashboard/society');
-    return { success: true };
 }
 
 /**
@@ -100,20 +105,25 @@ export async function deleteActivity(activityId) {
     
     if (!userData) return { error: 'User mapping failed' };
 
-    // Delete ONLY if the user is the creator
-    const { error } = await supabase
-        .from('activities')
-        .delete()
-        .eq('id', activityId)
-        .eq('creator_id', userData.id);
+    try {
+        // Delete ONLY if the user is the creator
+        const { error } = await supabase
+            .from('activities')
+            .delete()
+            .eq('id', activityId)
+            .eq('creator_id', userData.id);
 
-    if (error) {
-        console.error('Error deleting activity:', error.message);
-        return { error: `Failed to delete ping: ${error.message}` };
+        if (error) {
+            console.error('Error deleting activity:', error.message);
+            return { error: `Failed to delete ping: ${error.message}` };
+        }
+
+        revalidatePath('/dashboard/society');
+        return { success: true };
+    } catch (e) {
+        console.error('Unexpected error deleting activity:', e);
+        return { error: 'An unexpected error occurred while deleting the activity.' };
     }
-
-    revalidatePath('/dashboard/society');
-    return { success: true };
 }
 
 
@@ -132,31 +142,37 @@ export async function joinActivity(activityId) {
 
     if (!userData) return { error: 'User mapping failed' };
 
-    // Check if already joined
-    const { data: existing } = await supabase
-        .from('activity_participants')
-        .select('id')
-        .eq('activity_id', activityId)
-        .eq('user_id', userData.id)
-        .maybeSingle();
+    try {
+        // Check if already joined
+        const { data: existing } = await supabase
+            .from('activity_participants')
+            .select('id')
+            .eq('activity_id', activityId)
+            .eq('user_id', userData.id)
+            .maybeSingle();
 
-    if (existing) return { error: 'Already joined' };
+        if (existing) return { error: 'Already joined' };
 
-    const { error } = await supabase
-        .from('activity_participants')
-        .insert([{
-            activity_id: activityId,
-            user_id: userData.id,
-            status: 'going'
-        }]);
+        const { error } = await supabase
+            .from('activity_participants')
+            .insert([{
+                activity_id: activityId,
+                user_id: userData.id,
+                status: 'going'
+            }]);
 
-    if (error) {
-        console.error('Error joining activity:', error.message, error.details);
-        return { error: `Failed to join: ${error.message}` };
+        if (error) {
+            console.error('Error joining activity:', error.message, error.details);
+            if (error.code === '23505') return { error: 'You are already a participant.' };
+            return { error: `Failed to join: ${error.message}` };
+        }
+
+        revalidatePath('/dashboard/society');
+        return { success: true };
+    } catch (e) {
+        console.error('Unexpected error joining activity:', e);
+        return { error: 'An unexpected error occurred while joining.' };
     }
-
-    revalidatePath('/dashboard/society');
-    return { success: true };
 }
 
 /**
@@ -172,17 +188,22 @@ export async function cancelRsvp(activityId) {
         .eq('email', session.user.email)
         .single();
 
-    const { error } = await supabase
-        .from('activity_participants')
-        .delete()
-        .eq('activity_id', activityId)
-        .eq('user_id', userData.id);
+    try {
+        const { error } = await supabase
+            .from('activity_participants')
+            .delete()
+            .eq('activity_id', activityId)
+            .eq('user_id', userData.id);
 
-    if (error) {
-        console.error('Error cancelling RSVP:', error.message, error.details);
-        return { error: `Failed to cancel: ${error.message}` };
+        if (error) {
+            console.error('Error cancelling RSVP:', error.message, error.details);
+            return { error: `Failed to cancel: ${error.message}` };
+        }
+
+        revalidatePath('/dashboard/society');
+        return { success: true };
+    } catch (e) {
+        console.error('Unexpected error cancelling RSVP:', e);
+        return { error: 'An unexpected error occurred while cancelling.' };
     }
-
-    revalidatePath('/dashboard/society');
-    return { success: true };
 }

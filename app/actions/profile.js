@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/auth';
-import { updateUser } from '@/app/lib/db';
+import { updateUser, getUserByUsername, getUser } from '@/app/lib/db';
 import { supabase } from '@/app/lib/supabase';
 import { revalidatePath } from 'next/cache';
 
@@ -13,8 +13,8 @@ export async function updateUserProfileAction(prevState, formData) {
         }
 
         const name = formData.get('name');
-        const username = formData.get('username');
-        const email = formData.get('email');
+        const username = formData.get('username')?.toString().toLowerCase();
+        const email = formData.get('email')?.toString().toLowerCase();
         const date_of_birth = formData.get('date_of_birth');
         const bio = formData.get('bio');
         const gender = formData.get('gender');
@@ -58,6 +58,26 @@ export async function updateUserProfileAction(prevState, formData) {
         if (profilePictureUrl) {
              updates.profile_picture = profilePictureUrl;
         }
+
+        // --- Uniqueness Checks ---
+        const currentUser = await getUser(session.user.email);
+        
+        // Check Username
+        if (updates.username && updates.username !== currentUser?.username) {
+            const existingWithUsername = await getUserByUsername(updates.username);
+            if (existingWithUsername && existingWithUsername.email !== session.user.email) {
+                return { error: 'Username is already taken by another user.' };
+            }
+        }
+
+        // Check Email (if being changed)
+        if (updates.email && updates.email !== session.user.email) {
+            const existingWithEmail = await getUser(updates.email);
+            if (existingWithEmail) {
+                return { error: 'Email is already taken by another user.' };
+            }
+        }
+        // -------------------------
 
         await updateUser(session.user.email, updates);
 

@@ -3,12 +3,24 @@ import { notFound } from 'next/navigation';
 import { auth } from '@/auth';
 import FollowButton from '../components/FollowButton';
 
+export async function generateMetadata({ params }) {
+    const { username } = await params;
+    const user = await getUserByUsername(username.toLowerCase());
+
+    if (!user) return { title: 'User Not Found' };
+
+    return {
+        title: `${user.name} (@${user.username})`,
+        description: user.bio || `View ${user.name}'s profile and posts on Nimbuzz.`,
+    };
+}
+
 export default async function PublicProfilePage({ params }) {
     const resolvedParams = await params;
     const { username } = resolvedParams;
     
     const [userProfile, session] = await Promise.all([
-        getUserByUsername(username),
+        getUserByUsername(username.toLowerCase()),
         auth()
     ]);
 
