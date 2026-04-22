@@ -51,9 +51,9 @@ export default async function SearchPage({ searchParams }) {
                                 <span className="text-xs font-black uppercase tracking-widest text-zinc-400 truncate">@{user.username || 'unknown'}</span>
                            </div>
                            <div className="hidden sm:block">
-                               <button className="px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-2xl text-[10px] font-black tracking-widest uppercase transition-all shadow-xl shadow-primary/20 active:scale-95">
+                               <div className="px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-2xl text-[10px] font-black tracking-widest uppercase transition-all shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 text-center">
                                    Profile
-                               </button>
+                               </div>
                            </div>
                       </Link>
                   ))}

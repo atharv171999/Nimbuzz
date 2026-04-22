@@ -49,10 +49,10 @@ export async function getUser(email: string): Promise<User | undefined> {
         .from('users')
         .select('*')
         .eq('email', email)
-        .single();
+        .maybeSingle();
 
     if (error) {
-        console.error('Error fetching user from Supabase:', error);
+        console.error('Error fetching user from Supabase:', error.message || error);
         return undefined;
     }
 
@@ -249,11 +249,11 @@ export async function getUserByUsername(username: string): Promise<User | undefi
     const { data: user, error } = await supabase
         .from('users')
         .select('*')
-        .eq('username', username)
-        .single();
+        .ilike('username', username)
+        .maybeSingle();
 
     if (error) {
-        console.error('Error fetching user by username from Supabase:', error);
+        console.error('Error fetching user by username from Supabase:', error.message || error);
         return undefined;
     }
 

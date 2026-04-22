@@ -5,7 +5,7 @@ import FollowButton from '../components/FollowButton';
 
 export async function generateMetadata({ params }) {
     const { username } = await params;
-    const user = await getUserByUsername(username.toLowerCase());
+    const user = await getUserByUsername(username);
 
     if (!user) return { title: 'User Not Found' };
 
@@ -20,7 +20,7 @@ export default async function PublicProfilePage({ params }) {
     const { username } = resolvedParams;
     
     const [userProfile, session] = await Promise.all([
-        getUserByUsername(username.toLowerCase()),
+        getUserByUsername(username),
         auth()
     ]);
 
