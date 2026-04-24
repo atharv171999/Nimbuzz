@@ -2,6 +2,7 @@ import { auth } from '@/auth';
 import { getUser, getPostsByEmail, getFollowerCount, getFollowingCount } from '@/app/lib/db';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import ProfileSettings from './components/ProfileSettings';
 
 export default async function ProfilePage() {
@@ -40,8 +41,12 @@ export default async function ProfilePage() {
                     {/* Avatar */}
                     <div className="w-36 h-36 md:w-48 md:h-48 shrink-0 rounded-full overflow-hidden border-4 border-white relative bg-zinc-100 shadow-xl shadow-zinc-200/50">
                         {userProfile.profile_picture ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={userProfile.profile_picture} alt={userProfile.username} className="w-full h-full object-cover" />
+                            <Image 
+                                src={userProfile.profile_picture} 
+                                alt={userProfile.username || 'Profile'} 
+                                fill
+                                className="object-cover" 
+                            />
                         ) : (
                             <div className="w-full h-full bg-zinc-200" />
                         )}
@@ -96,11 +101,12 @@ export default async function ProfilePage() {
                     {userPosts.map((post) => (
                         <div key={post.id} className="aspect-square relative bg-white border border-zinc-200 group cursor-pointer overflow-hidden rounded-2xl md:rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500">
                             {post.image_url ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img 
+                                <Image 
                                     src={post.image_url} 
                                     alt="Post" 
-                                    className="w-full h-full object-cover transition-transform duration-700" 
+                                    fill
+                                    sizes="(max-width: 768px) 33vw, 300px"
+                                    className="object-cover transition-transform duration-700" 
                                 />
                             ) : (
                                 <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 text-center group-hover:scale-110 transition-transform duration-700 bg-zinc-50 border border-zinc-100">

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import CreatePostModal from './CreatePostModal';
 import { useState } from "react";
@@ -41,8 +42,12 @@ export default function BottomNav({ user }) {
                                 {item.isProfile ? (
                                     <div className={`h-7 w-7 rounded-full overflow-hidden border-2 transition-all ${isActive ? 'border-primary ring-2 ring-primary/20' : 'border-zinc-200'} relative shadow-sm`}>
                                         {user?.profile_picture ? (
-                                            // eslint-disable-next-line @next/next/no-img-element
-                                            <img src={user.profile_picture} alt="Profile" className="w-full h-full object-cover" />
+                                            <Image 
+                                                src={user.profile_picture} 
+                                                alt="Profile" 
+                                                fill
+                                                className="object-cover" 
+                                            />
                                         ) : (
                                             <div className="w-full h-full bg-zinc-200" />
                                         )}
@@ -87,8 +92,12 @@ export default function BottomNav({ user }) {
                                 {item.isProfile ? (
                                     <div className={`h-7 w-7 rounded-full overflow-hidden border-2 transition-all ${isActive ? 'border-primary ring-2 ring-primary/20' : 'border-zinc-200'} relative shadow-sm`}>
                                         {user?.profile_picture ? (
-                                            // eslint-disable-next-line @next/next/no-img-element
-                                            <img src={user.profile_picture} alt="Profile" className="w-full h-full object-cover" />
+                                            <Image 
+                                                src={user.profile_picture} 
+                                                alt="Profile" 
+                                                fill
+                                                className="object-cover" 
+                                            />
                                         ) : (
                                             <div className="w-full h-full bg-zinc-200" />
                                         )}

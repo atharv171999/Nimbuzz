@@ -2,6 +2,7 @@
 
 import { joinActivity, cancelRsvp, deleteActivity } from '@/app/actions/society';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function ActivityCard({ activity, currentUserEmail }) {
     const [isPending, setIsPending] = useState(false);
@@ -91,7 +92,14 @@ export default function ActivityCard({ activity, currentUserEmail }) {
             <div className="flex items-center gap-2 mt-2">
                 <div className="w-6 h-6 rounded-full overflow-hidden border border-slate-200 shrink-0">
                     {activity.creator?.profile_picture ? (
-                        <img src={activity.creator.profile_picture} alt="Avatar" className="w-full h-full object-cover" />
+                        <div className="relative w-full h-full">
+                            <Image 
+                                src={activity.creator.profile_picture} 
+                                alt="Avatar" 
+                                fill
+                                className="object-cover" 
+                            />
+                        </div>
                     ) : (
                         <div className="w-full h-full bg-slate-100" />
                     )}

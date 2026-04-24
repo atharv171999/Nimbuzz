@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { sendChatMessage, fetchMessages } from '@/app/actions/chat';
 
 export default function ChatUI({ initialMessages, myEmail, targetUser }) {
@@ -67,10 +68,14 @@ export default function ChatUI({ initialMessages, myEmail, targetUser }) {
             {/* Thread Header */}
             <div className="px-8 py-6 flex items-center justify-between bg-white/40 backdrop-blur-xl sticky top-0 z-10 transition-all duration-300 border-b border-zinc-200/50">
                 <Link href={`/dashboard/profile/${targetUser.username}`} className="flex items-center gap-5 group px-4 py-2 rounded-2xl hover:bg-white/50 transition-all">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-100 shrink-0 bg-zinc-50 group-hover:border-primary group-hover:scale-105 transition-all duration-500">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-100 shrink-0 bg-zinc-50 group-hover:border-primary group-hover:scale-105 transition-all duration-500">
                         {targetUser.profile_picture ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={targetUser.profile_picture} alt={targetUser.username} className="w-full h-full object-cover" />
+                            <Image 
+                                src={targetUser.profile_picture} 
+                                alt={targetUser.username || 'Profile'} 
+                                fill
+                                className="object-cover" 
+                            />
                         ) : (
                             <div className="w-full h-full bg-zinc-200" />
                         )}

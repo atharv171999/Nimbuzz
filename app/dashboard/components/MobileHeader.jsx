@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { searchUsersAction, getAllUsersAction } from '@/app/actions/user';
@@ -92,6 +93,14 @@ export default function MobileHeader() {
 
     return (
         <div className="lg:hidden fixed top-4 inset-x-0 z-50 px-4 flex flex-col items-center pointer-events-none">
+            {/* Backdrop Overlay when searching */}
+            {isSearching && (
+                <div 
+                    className="fixed inset-0 bg-zinc-900/60 backdrop-blur-md z-[-1] pointer-events-auto animate-in fade-in duration-300"
+                    onClick={closeSearch}
+                />
+            )}
+            
             {/* Header Pill */}
             <header className={`pointer-events-auto h-14 w-full max-w-sm flex items-center transition-all duration-500 ease-out bg-white/80 backdrop-blur-xl border border-white/40 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.08)] overflow-hidden ${isSearching ? 'px-2' : 'px-6 justify-between'}`}>
                 
@@ -160,10 +169,14 @@ export default function MobileHeader() {
                             onClick={() => handleUserSelect(user.username)}
                             className="flex items-center gap-4 p-3 rounded-2xl hover:bg-zinc-50 transition-all duration-200 group text-left"
                         >
-                            <div className="h-10 w-10 rounded-full bg-zinc-100 overflow-hidden shrink-0 border-2 border-white shadow-sm group-hover:scale-110 transition-transform duration-300">
+                            <div className="relative h-10 w-10 rounded-full bg-zinc-100 overflow-hidden shrink-0 border-2 border-white shadow-sm group-hover:scale-110 transition-transform duration-300">
                                 {user.profile_picture ? (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img src={user.profile_picture} alt={user.username} className="w-full h-full object-cover" />
+                                    <Image 
+                                        src={user.profile_picture} 
+                                        alt={user.username || 'Profile'} 
+                                        fill
+                                        className="object-cover" 
+                                    />
                                 ) : (
                                     <div className="w-full h-full bg-primary/5 flex items-center justify-center text-primary font-black text-xs">
                                         {user.username?.[0]?.toUpperCase()}

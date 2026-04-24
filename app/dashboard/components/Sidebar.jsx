@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import Image from "next/image";
+import Image from "next/image";
 import { SignOutButton } from '@/app/components/SignOutButton';
 import CreatePostModal from './CreatePostModal';
 
@@ -61,7 +61,12 @@ export default function Sidebar({ user }) {
                                 <div className="h-6 w-6 rounded-full overflow-hidden border border-slate-200 relative bg-slate-100">
                                     {user?.profile_picture ? (
                                         // eslint-disable-next-line @next/next/no-img-element
-                                        <img src={user.profile_picture} alt="Profile" className="w-full h-full object-cover" />
+                                        <Image 
+                                            src={user.profile_picture} 
+                                            alt="Profile" 
+                                            fill
+                                            className="object-cover" 
+                                        />
                                     ) : (
                                         <div className="absolute inset-0 bg-zinc-200" />
                                     )}

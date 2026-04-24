@@ -93,17 +93,7 @@ export default function SecurityForm() {
                             <div className="w-1 h-1 bg-slate-300 rounded-full" />
                             Minimum 6 characters long
                         </li>
-                        <li className="flex items-center gap-2">
-                            <div className="w-1 h-1 bg-slate-300 rounded-full" />
-                            Cannot be the same as your old password
-                        </li>
                     </ul>
-                </div>
-                <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Account Security</h4>
-                    <p className="text-xs text-slate-600 font-medium leading-relaxed">
-                        If you notice any unusual activity, we recommend changing your password immediately and logging out of all devices.
-                    </p>
                 </div>
             </div>
         </form>

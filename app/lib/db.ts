@@ -31,13 +31,30 @@ export interface Message {
     created_at?: string;
 }
 
-export async function getUsers(): Promise<User[]> {
+export async function getUsers(limit = 20): Promise<User[]> {
     const { data, error } = await supabase
         .from('users')
-        .select('*');
+        .select('*')
+        .limit(limit);
 
     if (error) {
         console.error('Error fetching users from Supabase:', error);
+        return [];
+    }
+
+    return data || [];
+}
+
+export async function getUsersByEmails(emails: string[]): Promise<User[]> {
+    if (emails.length === 0) return [];
+    
+    const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .in('email', emails);
+
+    if (error) {
+        console.error('Error fetching users by emails:', error);
         return [];
     }
 
@@ -150,7 +167,7 @@ export async function getPostsByEmail(email: string): Promise<Post[]> {
     return data || [];
 }
 
-export async function getFeedPosts(userEmail: string): Promise<Post[]> {
+export async function getFeedPosts(userEmail: string, limit = 10): Promise<Post[]> {
     // 1. Get list of emails the user is following
     const { data: follows, error: followsError } = await supabase
         .from('follows')
@@ -170,21 +187,48 @@ export async function getFeedPosts(userEmail: string): Promise<Post[]> {
         .from('posts')
         .select('*')
         .in('user_email', emailsToFetch)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(limit);
         
-    if (postsError) {
+    if (postsError || !posts) {
         console.error('Error fetching feed posts:', postsError);
         return [];
     }
     
-    // 4. Fetch like counts and status for each post
-    const postsWithLikes = await Promise.all((posts || []).map(async (post) => {
-        const { likesCount, userHasLiked } = await getPostLikeData(post.id, userEmail);
-        return {
-            ...post,
-            likes_count: likesCount,
-            user_has_liked: userHasLiked
-        };
+    if (posts.length === 0) return [];
+
+    const postIds = posts.map(p => p.id);
+
+    // 4. Bulk fetch like counts
+    const { data: likeCounts, error: countError } = await supabase
+        .from('post_likes')
+        .select('post_id');
+    
+    // Note: In a production environment with many likes, we should use a RPC or a more optimized aggregate query.
+    // For now, we'll manually aggregate the fetched likes for these posts to avoid N+1.
+    // Actually, a better bulk way without RPC:
+    const { data: allLikesForPosts } = await supabase
+        .from('post_likes')
+        .select('post_id, user_email')
+        .in('post_id', postIds);
+
+    const likesMap = new Map();
+    const userLikedSet = new Set();
+
+    if (allLikesForPosts) {
+        allLikesForPosts.forEach(like => {
+            likesMap.set(like.post_id, (likesMap.get(like.post_id) || 0) + 1);
+            if (like.user_email === userEmail) {
+                userLikedSet.add(like.post_id);
+            }
+        });
+    }
+
+    // 5. Combine data
+    const postsWithLikes = posts.map(post => ({
+        ...post,
+        likes_count: likesMap.get(post.id) || 0,
+        user_has_liked: userLikedSet.has(post.id)
     }));
     
     return postsWithLikes;
@@ -381,11 +425,13 @@ export async function getChatContacts(userEmail: string): Promise<User[]> {
         return [];
     }
 
-    // Now securely fetch all messages linked to this user sequentially to arrange by recency
+    // Now securely fetch recent messages linked to this user to arrange by recency
     const { data: messages } = await supabase
         .from('messages')
         .select('sender_email, receiver_email, created_at')
-        .or(`sender_email.eq.${userEmail},receiver_email.eq.${userEmail}`);
+        .or(`sender_email.eq.${userEmail},receiver_email.eq.${userEmail}`)
+        .order('created_at', { ascending: false })
+        .limit(500); // Sufficient for recent sorting without fetching thousands
 
     const lastMessageMap = new Map<string, number>();
 
@@ -394,8 +440,8 @@ export async function getChatContacts(userEmail: string): Promise<User[]> {
             const time = new Date(msg.created_at).getTime();
             const contactEmail = msg.sender_email === userEmail ? msg.receiver_email : msg.sender_email;
             
-            const existingTime = lastMessageMap.get(contactEmail) || 0;
-            if (time > existingTime) {
+            // Since we ordered by descending, the first one we find is the latest
+            if (!lastMessageMap.has(contactEmail)) {
                 lastMessageMap.set(contactEmail, time);
             }
         });

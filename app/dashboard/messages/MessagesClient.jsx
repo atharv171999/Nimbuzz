@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function MessagesClient({ contacts, children }) {
@@ -44,10 +45,14 @@ export default function MessagesClient({ contacts, children }) {
                                     href={`/dashboard/messages/${linkIdentifier}`}
                                     className="flex items-center gap-3 p-3 px-5 py-4 hover:bg-slate-50 transition-colors border-b border-slate-100"
                                 >
-                                    <div className="w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-full overflow-hidden border border-slate-200 bg-slate-50">
+                                    <div className="relative w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-full overflow-hidden border border-slate-200 bg-slate-50">
                                         {contact.profile_picture ? (
-                                            // eslint-disable-next-line @next/next/no-img-element
-                                            <img src={contact.profile_picture} alt={contact.username} className="w-full h-full object-cover" />
+                                            <Image 
+                                                src={contact.profile_picture} 
+                                                alt={contact.username || 'Contact'} 
+                                                fill
+                                                className="object-cover" 
+                                            />
                                         ) : (
                                             <div className="w-full h-full bg-zinc-200" />
                                         )}

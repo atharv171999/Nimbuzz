@@ -1,6 +1,7 @@
 import { searchUsers, getUsers } from '@/app/lib/db';
 import SearchInput from './SearchInput';
 import Link from 'next/link';
+import Image from 'next/image';
 import { auth } from '@/auth';
 
 export default async function SearchPage({ searchParams }) {
@@ -38,8 +39,12 @@ export default async function SearchPage({ searchParams }) {
                       <Link href={user.username ? `/dashboard/profile/${user.username}` : '#'} key={user.id} className="group flex items-center gap-6 bg-white border border-zinc-200/50 rounded-[2.5rem] p-6 hover:border-primary transition-all cursor-pointer shadow-sm hover:shadow-xl hover:shadow-primary/5">
                            <div className="relative h-20 w-20 rounded-full bg-zinc-100 overflow-hidden shrink-0 border-4 border-white transition-all group-hover:scale-105 duration-500 shadow-md">
                                 {user.profile_picture ? (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img src={user.profile_picture} alt="Profile" className="w-full h-full object-cover" />
+                                    <Image 
+                                        src={user.profile_picture} 
+                                        alt="Profile" 
+                                        fill
+                                        className=" w-full h-full object-cover" 
+                                    />
                                 ) : (
                                     <div className="w-full h-full bg-zinc-50" />
                                 )}

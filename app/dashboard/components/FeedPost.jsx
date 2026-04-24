@@ -77,8 +77,12 @@ export default function FeedPost({ post, author, currentUserEmail }) {
                 <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-zinc-50 bg-zinc-100 relative shrink-0 shadow-sm transition-all ">
                         {author?.profile_picture ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={author.profile_picture} alt={author?.username} className="w-full h-full object-cover" />
+                            <Image 
+                                src={author.profile_picture} 
+                                alt={author?.username || 'Profile'} 
+                                fill 
+                                className="object-cover" 
+                            />
                         ) : (
                             <div className="w-full h-full bg-zinc-200 transition-transform" />
                         )}
@@ -128,11 +132,12 @@ export default function FeedPost({ post, author, currentUserEmail }) {
             {/* Post Image Focus (Conditional) */}
             {post.image_url && post.image_url.trim() !== '' && (
                 <div className="w-full aspect-square relative bg-zinc-50 flex items-center justify-center overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
+                    <Image 
                         src={post.image_url} 
                         alt="Post content" 
-                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-1000 ease-out"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 470px"
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-1000 ease-out"
                     />
                 </div>
             )}

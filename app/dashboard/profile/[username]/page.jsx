@@ -1,6 +1,7 @@
 import { getUserByUsername, getPostsByEmail, checkIsFollowing, getFollowerCount, getFollowingCount } from '@/app/lib/db';
 import { notFound } from 'next/navigation';
 import { auth } from '@/auth';
+import Image from 'next/image';
 import FollowButton from '../components/FollowButton';
 
 export async function generateMetadata({ params }) {
@@ -48,8 +49,12 @@ export default async function PublicProfilePage({ params }) {
                     {/* Avatar */}
                     <div className="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden border border-slate-200 relative bg-slate-100 shadow-sm">
                         {userProfile.profile_picture ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={userProfile.profile_picture} alt={userProfile.username} className="w-full h-full object-cover" />
+                            <Image 
+                                src={userProfile.profile_picture} 
+                                alt={userProfile.username || 'Profile'} 
+                                fill
+                                className="object-cover" 
+                            />
                         ) : (
                             <div className="w-full h-full bg-zinc-200" />
                         )}
@@ -107,11 +112,12 @@ export default async function PublicProfilePage({ params }) {
                     {userPosts.map((post) => (
                         <div key={post.id} className="aspect-square relative bg-white border border-slate-200 group cursor-pointer overflow-hidden rounded-sm md:rounded-xl">
                             {post.image_url ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img 
+                                <Image 
                                     src={post.image_url} 
                                     alt="Post" 
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                    fill
+                                    sizes="(max-width: 768px) 33vw, 300px"
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500" 
                                 />
                             ) : (
                                 <div className="w-full h-full flex flex-col items-center justify-center p-3 sm:p-6 text-center group-hover:scale-105 transition-transform duration-500 bg-zinc-50 border border-zinc-100">

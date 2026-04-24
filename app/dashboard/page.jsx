@@ -1,4 +1,4 @@
-import { getUsers, getFeedPosts } from '@/app/lib/db';
+import { getUsersByEmails, getFeedPosts } from '@/app/lib/db';
 import FeedPost from './components/FeedPost';
 import { auth } from '@/auth';
 import MobileHeader from './components/MobileHeader';
@@ -14,13 +14,14 @@ export default async function DashboardPage() {
     const email = session?.user?.email;
 
     // Fetch posts belonging to user and their network
-    const [posts, users] = await Promise.all([
-        email ? getFeedPosts(email) : Promise.resolve([]),
-        getUsers()
-    ]);
+    const posts = email ? await getFeedPosts(email) : [];
+    
+    // Fetch only the authors needed for the current posts
+    const authorEmails = Array.from(new Set(posts.map(post => post.user_email)));
+    const authors = await getUsersByEmails(authorEmails);
 
-    // Fast O(1) dictionary lookup since we don't have SQL JOIN policies enabled perfectly yet
-    const usersByEmail = users.reduce((acc, user) => {
+    // Fast O(1) dictionary lookup for authors
+    const usersByEmail = authors.reduce((acc, user) => {
         acc[user.email] = user;
         return acc;
     }, {});
