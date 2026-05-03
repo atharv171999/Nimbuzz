@@ -59,6 +59,16 @@ export async function updateUserProfileAction(prevState, formData) {
              updates.profile_picture = profilePictureUrl;
         }
 
+        const nameRegex = /^[a-zA-Z0-9\s]+$/;
+        if (updates.name && !nameRegex.test(updates.name)) {
+            return { error: 'Name can only contain letters, numbers, and spaces' };
+        }
+
+        const usernameRegex = /^[a-zA-Z0-9_]+$/;
+        if (updates.username && !usernameRegex.test(updates.username)) {
+            return { error: 'Username can only contain letters, numbers, and underscores (no spaces or special characters)' };
+        }
+
         // --- Uniqueness Checks ---
         const currentUser = await getUser(session.user.email);
         

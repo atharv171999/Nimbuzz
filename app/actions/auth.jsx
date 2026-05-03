@@ -42,6 +42,16 @@ export async function signup(
     if (!email || !password) return 'Please enter both email and password';
     if (!username) return 'Please enter a username';
 
+    const nameRegex = /^[a-zA-Z0-9\s]+$/;
+    if (name && !nameRegex.test(name)) {
+        return 'Name can only contain letters, numbers, and spaces';
+    }
+
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    if (!usernameRegex.test(username)) {
+        return 'Username can only contain letters, numbers, and underscores (no spaces or special characters)';
+    }
+
     const existingUser = await getUser(email);
     if (existingUser) return 'A user with this email already exists';
 

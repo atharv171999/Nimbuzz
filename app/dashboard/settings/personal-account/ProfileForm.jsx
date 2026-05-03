@@ -111,7 +111,7 @@ export default function ProfileForm({ user }) {
                         id="username"
                         name="username"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
                         className={`block w-full rounded-xl border-0 bg-zinc-50 py-3 px-4 text-slate-900 shadow-sm ring-1 ring-inset transition-all font-medium sm:text-sm sm:leading-6 placeholder:text-zinc-400 ${
                             usernameStatus === 'taken' ? 'ring-red-500 focus:ring-red-500' : 
                             usernameStatus === 'available' ? 'ring-emerald-500 focus:ring-emerald-500' : 'ring-zinc-200 focus:ring-zinc-900'
