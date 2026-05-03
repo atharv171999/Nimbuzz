@@ -18,14 +18,20 @@ export default function CreatePostModal({ isOpen, onClose, user }) {
             setTimeout(() => {
                 setPreviewImage(null);
                 setCaption('');
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
             }, 300);
         }
     }, [isOpen]);
 
+    const prevStateRef = useRef(state);
+
     useEffect(() => {
-        if (state?.success) {
+        if (state?.success && state !== prevStateRef.current) {
             // Post was created!
             onClose();
+            prevStateRef.current = state;
         }
     }, [state, onClose]);
 
@@ -61,16 +67,16 @@ export default function CreatePostModal({ isOpen, onClose, user }) {
                 </div>
 
                 {/* Form Body */}
-                <form action={formAction} className="flex flex-col md:flex-row h-[60vh] max-h-[600px] min-h-[400px]">
+                <form action={formAction} className="flex flex-col md:flex-row h-[80vh] md:h-[60vh] max-h-[800px] md:max-h-[600px] min-h-[400px]">
                     
                     {/* Left Pane: Image Uploader / Preview */}
-                    <div className="flex-1 border-r border-slate-200 bg-slate-50 flex flex-col items-center justify-center relative group">
+                    <div className="flex-1 min-h-0 border-b md:border-b-0 md:border-r border-slate-200 bg-slate-50 flex flex-col items-center justify-center relative group">
                         {previewImage ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img 
                                 src={previewImage} 
                                 alt="Preview" 
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain md:object-cover bg-black/5"
                             />
                         ) : (
                             <div className="text-center px-6">
@@ -105,7 +111,7 @@ export default function CreatePostModal({ isOpen, onClose, user }) {
                     </div>
 
                     {/* Right Pane: Details & Metadata */}
-                    <div className="w-full md:w-80 flex flex-col bg-white">
+                    <div className="w-full md:w-80 flex flex-col bg-white shrink-0">
                         <div className="flex-1 p-4 flex flex-col">
                             {/* Profile Header */}
                             <div className="flex items-center gap-3 mb-4">

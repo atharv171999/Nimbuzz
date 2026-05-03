@@ -136,6 +136,7 @@ export default function FeedPost({ post, author, currentUserEmail }) {
                         src={post.image_url} 
                         alt="Post content" 
                         fill
+                        unoptimized={true}
                         sizes="(max-width: 768px) 100vw, 470px"
                         className="object-cover group-hover:scale-[1.03] transition-transform duration-1000 ease-out"
                     />
